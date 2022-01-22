@@ -7,4 +7,4 @@ WORKDIR ${WORKDIR}
 
 COPY . ${WORK_DIR}
 
-#CMD [ "php", "./index.php" ]
+CMD [ "php", "./index.php" ]
