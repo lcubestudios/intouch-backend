@@ -1,0 +1,41 @@
+version: '3.9'
+services:
+    backend:
+      container_name: php
+      build:
+        context: php 
+        dockerfile: dockerfile
+      volumes:
+        - ./php:/var/www/html
+      ports:
+        - 8000:80
+      depends_on:
+        - db
+
+    db:
+      container_name: db
+      build:
+        context: postgres
+        dockerfile: dockerfile
+      ports:
+        - "${DB_PORT}:5432"
+      restart: always
+      environment:
+        - POSTGRES_USER=${DB_USER}
+        - POSTGRES_PASSWORD=${DB_PASSWORD}
+        - POSTGRES_DB=${DB_NAME}
+      volumes:
+        - ./pgdata:/var/lib/postgresql/data
+    
+    pgadmin:
+      container_name: ${PGA_CONTAINER_NAME}
+      image: bitnami/phppgadmin:${PGA_TAG}
+      environment:
+        - DATABASE_HOST=db
+        - DATABASE_PORT_NUMBER=${DB_PORT}
+      ports: 
+        - "${PGA_HTTP_PORT}:8080"
+        - "${PGA_HTTPS_PORT}:8143"
+      depends_on:
+        - db
+        

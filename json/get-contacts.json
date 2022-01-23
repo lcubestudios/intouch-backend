@@ -1,0 +1,34 @@
+{
+	"contacts": [
+		{
+			"uid": 1,
+			"phone_number": "1234567890",
+			"unread_count": 0,
+			"last_message": {
+				"body": "Lorem ipsum...",
+				"dt_created": "01/22/2022",
+				"timestamp": "01:22"
+			}
+		},
+		{
+			"uid": 2,
+			"phone_number": "2345678901",
+			"unread_count": 12,
+			"last_message": {
+				"body": "Lorem ipsum...",
+				"dt_created": "01/22/2022",
+				"timestamp": "01:22"
+			}
+		},
+		{
+			"uid": 3,
+			"phone_number": "3456789012",
+			"unread_count": 1,
+			"last_message": {
+				"body": "Lorem ipsum...",
+				"dt_created": "01/22/2022",
+				"timestamp": "01:22"
+			}
+		}
+	]
+}
