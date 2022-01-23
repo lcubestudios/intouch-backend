@@ -1,6 +1,6 @@
 version: '3.9'
 services:
-    backend:
+    php:
       image: lcubestudios/php
       container_name: php
       build:
@@ -10,7 +10,7 @@ services:
       ports:
         - 8000:80
       depends_on:
-        - db
+        - db 
 
     db:
       image: lcubestudios/db

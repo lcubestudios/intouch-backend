@@ -17,13 +17,13 @@ SET client_min_messages = warning;
 SET row_security = off;
 
 --
--- Name: lcube; Type: DATABASE; Schema: -; Owner: -
+-- Name: intouch; Type: DATABASE; Schema: -; Owner: -
 --
 
-CREATE DATABASE lcube WITH TEMPLATE = template0 ENCODING = 'UTF8' LC_COLLATE = 'en_US.utf8' LC_CTYPE = 'en_US.utf8';
+CREATE DATABASE intouch WITH TEMPLATE = template0 ENCODING = 'UTF8' LC_COLLATE = 'en_US.utf8' LC_CTYPE = 'en_US.utf8';
 
 
-\connect lcube
+\connect intouch
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
