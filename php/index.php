@@ -10,12 +10,13 @@ $dotenv->load();
 
 // Retrive env variable
 $host = $_ENV['HOST'];
-$username = $_ENV['DB_USER'];
-$password = $_ENV['DB_PASSWORD'];
+$db_user = $_ENV['DB_USER'];
+$db_pass = $_ENV['DB_PASSWORD'];
 $db = $_ENV['DB_NAME'];
+$port = $_ENV['DB_PORT'];
 
 // Create connection
-$conn = pg_connect($host, $username, $password, $dbname);
+$conn = pg_connect("host=$host port=5432 dbname=$db user=$db_user password=$db_pass");
 // Check connecion 
 if ($conn) {
 

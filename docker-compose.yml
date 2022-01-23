@@ -1,10 +1,10 @@
 version: '3.9'
 services:
     backend:
+      image: lcubestudios/php
       container_name: php
       build:
         context: php 
-        dockerfile: dockerfile
       volumes:
         - ./php:/var/www/html
       ports:
@@ -13,17 +13,17 @@ services:
         - db
 
     db:
+      image: lcubestudios/db
       container_name: db
       build:
         context: postgres
-        dockerfile: dockerfile
       ports:
         - "${DB_PORT}:5432"
       restart: always
       environment:
         - POSTGRES_USER=${DB_USER}
         - POSTGRES_PASSWORD=${DB_PASSWORD}
-        - POSTGRES_DB=${DB_NAME}
+        #- POSTGRES_DB=${DB_NAME}
       volumes:
         - ./pgdata:/var/lib/postgresql/data
     
@@ -32,7 +32,6 @@ services:
       image: bitnami/phppgadmin:${PGA_TAG}
       environment:
         - DATABASE_HOST=db
-        - DATABASE_PORT_NUMBER=${DB_PORT}
       ports: 
         - "${PGA_HTTP_PORT}:8080"
         - "${PGA_HTTPS_PORT}:8143"
