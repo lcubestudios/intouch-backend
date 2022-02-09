@@ -50,5 +50,4 @@ if($method === "POST"){
         $auth_array['error_message'] = $error_msg;
         echo json_encode($auth_array);
     };
-
 ?>
