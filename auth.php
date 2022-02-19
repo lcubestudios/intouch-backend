@@ -19,19 +19,21 @@ if($method === "POST"){
 			WHERE phone_number = "' . $phone_number . '"
 			AND password = "' . $password . '"';
 		
-    $result = pg_query($conn, $query);
 
-		// Login Successful
-    if ($row = pg_fetch_assoc($result)) {
-			$output = $row;
-    }
-		// Login Failed
-		else {
-			$output = array(
-				'status_code' => 301,
-				'error_message' => 'Wrong username  or passoword. Please try again.',
-			);
-		}
+		echo $query;
+    // $result = pg_query($conn, $query);
+
+		// // Login Successful
+    // if ($row = pg_fetch_assoc($result)) {
+		// 	$output = $row;
+    // }
+		// // Login Failed
+		// else {
+		// 	$output = array(
+		// 		'status_code' => 301,
+		// 		'error_message' => 'Wrong username or password. Please try again.',
+		// 	);
+		// }
 	}
 	// REGISTER
 	else if ($purpose === 'reg') {
