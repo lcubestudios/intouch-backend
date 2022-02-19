@@ -62,20 +62,20 @@ if($method === "POST"){
 			$output = array(
 				'status_code' => 301,
 				'message' => 'This phone number has already been registered.'
-			)
+			);
 		}
 		else {
-			$output = array(
-				'status_code' => 200,
-				'message' => 'User has been created',
-				'profile' => array(
-					'token' => $token, 
-					'u_id' => pg_last_oid($result),
-					'first_name' => $first_name,
-					'last_name' => $last_name,
-					'phone_number' => $phone_number
-				)
-			)
+			// $output = array(
+			// 	'status_code' => 200,
+			// 	'message' => 'User has been created',
+			// 	'profile' => array(
+			// 		'token' => $token, 
+			// 		'u_id' => pg_last_oid($result),
+			// 		'first_name' => $first_name,
+			// 		'last_name' => $last_name,
+			// 		'phone_number' => $phone_number
+			// 	)
+			// );
 		}
 	}
 	else {
