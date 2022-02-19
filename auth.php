@@ -49,7 +49,8 @@ if($method === "POST"){
 		$query = "INSERT INTO " . $table . " (first_name, last_name, phone_number, password, token)
 			VALUES ('". $first_name ."', '". $last_name ."', '". $phone_number ."', '". $password ."', '". $token ."')";
 
-		$result = pg_query($conn, $query);
+		pg_send_query($conn, $sql);
+		$result = pg_get_result($conn);
 		$state = pg_result_error_field($result, PGSQL_DIAG_SQLSTATE);
 
 		if ($state == '23505') {
