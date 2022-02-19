@@ -23,13 +23,14 @@ if($method === "GET"){
     // Load Contacts 
     while ($r = pg_fetch_row($result2)) {
         $c_uid  = "$r[0]\n";
-    }
-    
-    //Output Contacts
+        
+        //Output Contacts
         $output = array(
             'status_code' => 200,
             'c_uid' => $c_uid
         );
+    }
+    
     }
     
     // No Token Found
