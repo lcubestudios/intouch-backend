@@ -48,7 +48,7 @@ function Delete(){
 function DeleteRelationship(){
     require('./config.php');
     $table = 'public.users';
-    $table2 = 'public.contacs';
+    $table2 = 'public.contacts';
 
     $raw=file_get_contents('php://input');
     $data=json_decode($raw,true);
