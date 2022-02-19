@@ -11,30 +11,27 @@ if($method === "POST"){
 		$raw = file_get_contents('php://input');
 		$data = json_decode($raw, true);
 
-		// $output = $data;
-		echo 'login test';
+    $phone_number = $data['phone_number'];
+    $password = $data['password'];
 
-    // $phone_number = $data['phone_number'];
-    // $password = $data['password'];
-
-		// $query = 'SELECT token, u_id, first_name, last_name, phone_number 
-		// 	FROM ' . $table . '
-		// 	WHERE phone_number = "' . $phone_number . '"
-		// 	AND password = "' . $password . '"';
+		$query = 'SELECT token, u_id, first_name, last_name, phone_number 
+			FROM ' . $table . '
+			WHERE phone_number = "' . $phone_number . '"
+			AND password = "' . $password . '"';
 		
-    // $result = pg_query($conn, $query);
+    $result = pg_query($conn, $query);
 
-		// Login Successful
-    // if ($row = pg_fetch_assoc($result)) {
-		// 	$output = $row;
-    // }
-		// Login Failed
-		// else {
-		// 	$output = array(
-		// 		'status_code' => 301,
-		// 		'error_message' => 'Wrong username  or passoword. Please try again.',
-		// 	);
-		// }
+		Login Successful
+    if ($row = pg_fetch_assoc($result)) {
+			$output = $row;
+    }
+		Login Failed
+		else {
+			$output = array(
+				'status_code' => 301,
+				'error_message' => 'Wrong username  or passoword. Please try again.',
+			);
+		}
 	}
 	// REGISTER
 	else if ($purpose === 'reg') {
