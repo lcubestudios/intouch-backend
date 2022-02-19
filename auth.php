@@ -38,9 +38,17 @@ if($method === "POST"){
 		$raw = file_get_contents('php://input');
 		$data = json_decode($raw, true);
 
+    $first_name = $data['first_name'];
+    $last_name = $data['last_name'];
+    $phone_number = $data['phone_number'];
+    $password = $data['password'];
+
 		$token = bin2hex(openssl_random_pseudo_bytes(20));
 
-		echo $token;
+		$query = "INSERT INTO " . $table . " (first_name, last_name, phone_number, password, token)
+			VALUE ('". $first_name ."', '". $last_name ."', '". $phone_number ."', '". $password ."', '". $token ."')";
+
+		echo $query;
 	}
 	else {
     $output = array(
