@@ -4,7 +4,7 @@ require('./config.php');
 if($method === "POST"){
 	$output = array();
 	$purpose = $_GET['purpose'];
-	$table = 'public.auth';
+	$table = 'public.users';
 
 	// LOGIN
 	if ($purpose === 'login') {
@@ -45,10 +45,13 @@ if($method === "POST"){
 
 		$token = bin2hex(openssl_random_pseudo_bytes(20));
 
-		$query = "INSERT INTO " . $table . " (first_name, last_name, phone_number, password, token)
-			VALUE ('". $first_name ."', '". $last_name ."', '". $phone_number ."', '". $password ."', '". $token ."')";
 
-		echo $query;
+		$query = "INSERT INTO " . $table . " (first_name, last_name, phone_number, password, token)
+			VALUES ('". $first_name ."', '". $last_name ."', '". $phone_number ."', '". $password ."', '". $token ."')";
+
+		$result = pg_query($conn, $query);
+
+		echo $result;
 	}
 	else {
     $output = array(
