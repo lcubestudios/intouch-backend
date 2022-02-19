@@ -23,13 +23,17 @@ if($method === "POST"){
 
 		// Login Successful
     if ($row = pg_fetch_assoc($result)) {
-			$output = $row;
+			$output = array(
+				'status_code' => 200,
+				'message' => 'User has been created',
+				'profile' => $row
+			);
     }
 		// Login Failed
 		else {
 			$output = array(
 				'status_code' => 301,
-				'error_message' => 'Wrong username or password. Please try again.',
+				'message' => 'Wrong username or password. Please try again.',
 			);
 		}
 	}
@@ -47,25 +51,37 @@ if($method === "POST"){
 
 
 		$query = "INSERT INTO " . $table . " (first_name, last_name, phone_number, password, token)
-			VALUES ('". $first_name ."', '". $last_name ."', '". $phone_number ."', '". $password ."', '". $token ."')";
+			VALUES ('". $first_name ."', '". $last_name ."', '". $phone_number ."', '". $password ."', '". $token ."')
+			RETURN u_id";
 
 		pg_send_query($conn, $query);
 		$result = pg_get_result($conn);
 		$state = pg_result_error_field($result, PGSQL_DIAG_SQLSTATE);
 
-		$output['test'] = $state;
-
 		if ($state == '23505') {
-			echo 'DUPE';
+			$output = array(
+				'status_code' => 301,
+				'message' => 'This phone number has already been registered.'
+			)
 		}
 		else {
-			echo 'HMM...';
+			$output = array(
+				'status_code' => 200,
+				'message' => 'User has been created',
+				'profile' => array(
+					'token' => $token, 
+					'u_id' => pg_last_oid($result),
+					'first_name' => $first_name,
+					'last_name' => $last_name,
+					'phone_number' => $phone_number
+				)
+			)
 		}
 	}
 	else {
     $output = array(
 			'status_code' => 500,
-			'error_message' => 'Invalid Request',
+			'message' => 'Invalid Request',
 		);
 	}
 
