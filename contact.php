@@ -13,7 +13,7 @@ if($method === "GET"){
     if($row = pg_fetch_assoc($result)){
         $output = array(
             'status_code' => 200,
-            'id' => $row['id']
+            'id' => $row['u_id']
         );
     }
     
