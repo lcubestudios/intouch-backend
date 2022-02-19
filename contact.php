@@ -7,7 +7,7 @@ if($method === "GET"){
 
     // Load Token
     //$token = 1234567890;
-    $query = "SELECT id FROM " . $table. " WHERE token = '". $token. "'";
+    $query = "SELECT u_id FROM " . $table. " WHERE token = '". $token. "'";
     $result = pg_query($conn, $query);
 
     if($row = pg_fetch_assoc($result)){
