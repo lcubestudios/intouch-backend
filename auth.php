@@ -16,8 +16,8 @@ if($method === "POST"){
 
 		$query = 'SELECT token, u_id, first_name, last_name, phone_number 
 			FROM ' . $table . '
-			WHERE phone_number = "' . $phone_number . '"
-			AND password = "' . $password . '"';
+			WHERE phone_number = \"' . $phone_number . '\"
+			AND password = \"' . $password . '\"';
 		
     $result = pg_query($conn, $query);
 
