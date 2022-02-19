@@ -11,7 +11,7 @@ if($method === "POST"){
 		$raw = file_get_contents('php://input');
 		$data = json_decode($raw, true);
 
-		echo $data;
+		echo $raw;
 
     // $phone_number = $data['phone_number'];
     // $password = $data['password'];
