@@ -2,9 +2,32 @@
 require('./config.php');
 
 if($method === "POST"){
+	$output = array();
 	$purpose = $_GET['purpose'];
 
 	echo $purpose;
+
+	// LOGIN
+	if ($purpose === 'login') {
+		$raw = file_get_contents('php://input');
+		$data = json_decode($raw, true);
+	}
+	// REGISTER
+	else if ($purpose === 'reg') {
+		$raw = file_get_contents('php://input');
+		$data = json_decode($raw, true);
+
+		$token = bin2hex(openssl_random_pseudo_bytes(16));
+	}
+	else {
+    $output = array(
+			'status_code' => 500,
+			'error_message' => 'Invalid Request',
+		);
+	}
+
+	echo json_encode($output);
+}
     // $raw=file_get_contents('php://input');
     // $data=json_decode($raw,true);
     // $phone_number = $data['phone_number'];
@@ -25,5 +48,4 @@ if($method === "POST"){
     //     $auth_array['status_code'] = $status_code;
     //     $auth_array['error_message'] = $error_msg;
     //     echo json_encode($auth_array);
-    // };
 ?>
