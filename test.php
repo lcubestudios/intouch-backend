@@ -4,9 +4,9 @@ error_reporting(E_ALL);
 ini_set('display_errors', 'On');
 
 // Retrive env variable
-$host = '172.27.0.2';
-$db_user = 'postgres';
-$db_pass = 'postgres';
+$host = '172.21.0.2';
+$db_user = 'lcube';
+$db_pass = 'LCubeStudios2022!%';
 $db = 'intouch';
 $port = 5432;
 
