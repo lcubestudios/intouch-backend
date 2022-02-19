@@ -21,15 +21,13 @@ if($method === "GET"){
         $result2 = pg_query($conn, $query2);
         $contact_array = array();
         
-        // Load Contacts 
+        // Load Contacts information
         while ($r = pg_fetch_row($result2)) {
-            $c_uid  = "$r[0]\n";
+            $c_uid  = $r[0];
             $query3 = "SELECT phone_number, first_name, last_name FROM " . $users_table. " WHERE u_id = '". $c_uid. "'";
             $result3 = pg_query($conn, $query3);
-
             if ($r3 = pg_fetch_row($result3)) {
                 $contact_array = array_push($r3);
-                echo($contact_array);
             }
         }
         
