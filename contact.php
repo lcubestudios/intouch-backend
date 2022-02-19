@@ -4,7 +4,7 @@ require('./config.php');
 if($method === "GET"){
     $output =  array();
     $users_table = 'public.users';
-    $contacts_table = 'public.contacts'
+    $contacts_table = 'public.contacts';
 
     // Load Token
     $raw=file_get_contents('php://input');
