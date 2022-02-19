@@ -24,6 +24,10 @@ if($method === "GET"){
 				'message' => 'Please log back in again',
 			);
 		}
+    
+    echo json_encode($output);
+
+	pg_close($conn);
 }
 
 ?>
