@@ -11,23 +11,25 @@ if($method === "POST"){
 		$raw = file_get_contents('php://input');
 		$data = json_decode($raw, true);
 
-    $phone_number = $data['phone_number'];
-    $password = $data['password'];
+		echo $data;
 
-		$query = 'SELECT token, u_id, first_name, last_name, phone_number 
-			FROM ' . $table . '
-			WHERE phone_number = "' . $phone_number . '"
-			AND password = "' . $password . '"';
+    // $phone_number = $data['phone_number'];
+    // $password = $data['password'];
+
+		// $query = 'SELECT token, u_id, first_name, last_name, phone_number 
+		// 	FROM ' . $table . '
+		// 	WHERE phone_number = "' . $phone_number . '"
+		// 	AND password = "' . $password . '"';
 		
 
-		echo $query;
+		// echo $query;
     // $result = pg_query($conn, $query);
 
-		// // Login Successful
+		// Login Successful
     // if ($row = pg_fetch_assoc($result)) {
 		// 	$output = $row;
     // }
-		// // Login Failed
+		// Login Failed
 		// else {
 		// 	$output = array(
 		// 		'status_code' => 301,
