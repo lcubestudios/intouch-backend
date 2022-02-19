@@ -19,12 +19,6 @@ $port = $_ENV['DB_PORT'];
 
 // Create connection
 $conn = pg_connect("host=$host port=5432 dbname=$db user=$db_user password=$db_pass");
-// Check connecion 
-if ($conn) {
-    echo "Connection attempt succeeded. \n";
-    } else {
-    echo "Connection attempt failed. \n"; 
-}
 
 $method = $_SERVER['REQUEST_METHOD'];
 ?>
