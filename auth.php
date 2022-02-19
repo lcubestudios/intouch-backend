@@ -6,13 +6,15 @@ if($method === "POST"){
 	$purpose = $_GET['purpose'];
 	$table = 'public.auth';
 
+	echo $purpose;
+
 	// LOGIN
 	if ($purpose === 'login') {
 		$raw = file_get_contents('php://input');
 		$data = json_decode($raw, true);
 
-		$output = $data;
-		$echo = 'login test';
+		// $output = $data;
+		echo 'login test';
 
     // $phone_number = $data['phone_number'];
     // $password = $data['password'];
