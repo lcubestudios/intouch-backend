@@ -27,4 +27,4 @@ if ($conn) {
 }
 
 $method = $_SERVER['REQUEST_METHOD'];
-php?>
+?>
