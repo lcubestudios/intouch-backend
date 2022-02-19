@@ -50,8 +50,9 @@ if($method === "POST"){
 			VALUES ('". $first_name ."', '". $last_name ."', '". $phone_number ."', '". $password ."', '". $token ."')";
 
 		$result = pg_query($conn, $query);
+		$state = pg_result_error_field($result, PGSQL_DIAG_SQLSTATE);
 
-		echo $result;
+		echo $state;
 	}
 	else {
     $output = array(
