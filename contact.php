@@ -28,6 +28,7 @@ if($method === "GET"){
             $result3 = pg_query($conn, $query3);
             if ($r3 = pg_fetch_row($result3)) {
                 $contact_array = array_push($r3);
+                echo json_encode($contact_array);
             }
         }
         
