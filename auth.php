@@ -28,7 +28,7 @@ if($method === "POST"){
     if ($row = pg_fetch_assoc($result)) {
 			$output = array(
 				'status_code' => 200,
-				'message' => 'User has been created',
+				'message' => 'Login sucessful!',
 				'profile' => $row
 			);
     }
