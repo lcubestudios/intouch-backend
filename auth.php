@@ -14,7 +14,7 @@ if($method === "POST"){
     $phone_number = $data['phone_number'];
     $password = $data['password'];
 
-		$query = "SELECT token, u_id, first_name, last_name, phone_number 
+		$query = "SELECT token, first_name, last_name, phone_number 
 			FROM " . $table . "
 			WHERE phone_number = '" . $phone_number . "'
 			AND password = '" . $password . "'";
@@ -69,7 +69,6 @@ if($method === "POST"){
 				'message' => 'User has been created',
 				'profile' => array(
 					'token' => $token, 
-					'u_id' => pg_last_oid($result),
 					'first_name' => $first_name,
 					'last_name' => $last_name,
 					'phone_number' => $phone_number
