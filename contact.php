@@ -19,9 +19,10 @@ if($method === "GET"){
     
     $query2 = "SELECT c_uid FROM " . $contacts_table. " WHERE u_id = '". $u_id. "'";
     $result2 = pg_query($conn, $query2);
-    while ($r = pg_fetch_assoc($result2)) {
-          var_dump(r);
-        }
+    while ($r = pg_fetch_row($result2)) {
+        $c_uid  = "$r[0]\n";
+        echo $c_uid;
+    }
     
         $output = array(
             'status_code' => 200,
