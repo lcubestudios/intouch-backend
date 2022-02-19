@@ -6,7 +6,7 @@ if($method === "GET"){
     $table = 'public.users';
 
     // Load Token
-    //$token = 1234567890;
+    $token = 1234567890;
     $query = "SELECT u_id FROM " . $table. " WHERE token = '". $token. "'";
     $result = pg_query($conn, $query);
 
