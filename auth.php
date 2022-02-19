@@ -1,6 +1,9 @@
 <?php
 require('./config.php');
 
+header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Headers: *");
+
 if($method === "POST"){
 	$output = array();
 	$purpose = $_GET['purpose'];
