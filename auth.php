@@ -52,7 +52,7 @@ if($method === "POST"){
 		$result = pg_query($conn, $query);
 		$state = pg_result_error_field($result, PGSQL_DIAG_SQLSTATE);
 
-		echo $state;
+		$output['test'] = $state;
 	}
 	else {
     $output = array(
