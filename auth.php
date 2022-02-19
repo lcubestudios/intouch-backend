@@ -19,7 +19,7 @@ if($method === "POST"){
 			WHERE phone_number = '" . $phone_number . "'
 			AND password = '" . $password . "'";
 		
-		console.log($query);
+		echo $query;
     // $result = pg_query($conn, $query);
 
 		// Login Successful
