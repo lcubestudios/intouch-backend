@@ -21,11 +21,11 @@ if($method === "POST"){
 		
     $result = pg_query($conn, $query);
 
-		Login Successful
+		// Login Successful
     if ($row = pg_fetch_assoc($result)) {
 			$output = $row;
     }
-		Login Failed
+		// Login Failed
 		else {
 			$output = array(
 				'status_code' => 301,
