@@ -52,7 +52,12 @@ if($method === "POST"){
 		$result = pg_query($conn, $query);
 		$state = pg_result_error_field($result, PGSQL_DIAG_SQLSTATE);
 
-		$output['test'] = $state;
+		if ($state == '23505') {
+			echo 'DUPE'
+		}
+		else {
+			echo 'HMM...'
+		}
 	}
 	else {
     $output = array(
