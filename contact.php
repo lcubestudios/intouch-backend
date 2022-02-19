@@ -19,8 +19,8 @@ if($method === "GET"){
     
     $query2 = "SELECT * FROM " . $contacts_table. " WHERE u_id = '". $u_id. "'";
     $result2 = pg_query($conn, $query2);
-    while ($r = pg_fetch_row($result2)) {
-          echo($r['c_uid']);
+    while ($r = pg_fetch_assoc($result2)) {
+          echo($r);
         }
     
         $output = array(
