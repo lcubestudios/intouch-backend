@@ -31,11 +31,15 @@ switch ($method):
             $query3 = "SELECT phone_number, first_name, last_name FROM " . $users_table. " WHERE u_id = '". $c_uid. "'";
             $result3 = pg_query($conn, $query3);
             while($r3 = pg_fetch_row($result3)) {
+                $query4 = "SELECT COUNT(*) FROM " . $table3 ." WHERE (r_read = FALSE AND r_id = '". $u_id."' AND s_id = '". $c_id."');";
+                $result4 = pg_query($conn, $query4);
+                $row4 = pg_fetch_row($result4);
                 array_push($contact_array, array(
                     "phone_number" => $r3[0],
                     "first_name" => $r3[1],
                     "last_name" => $r3[2],
-                    "u_id" => $u_id
+                    "u_id" => $u_id,
+                    "unread" => $row4[0]
                 ));
             }
         }
