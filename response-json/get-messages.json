@@ -5,6 +5,7 @@
 			"timestamp": "01:22",
 			"body": "0 said something to 1",
 			"sender_uid": 0,
+			"is_sender": true,
 			"receiver_uid": 1
 		},
 		{
@@ -12,6 +13,7 @@
 			"timestamp": "01:23",
 			"body": "2 said something to 0",
 			"sender_uid": 2,
+			"is_sender": false,
 			"receiver_uid": 0
 		},
 		{
