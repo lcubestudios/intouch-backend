@@ -131,9 +131,11 @@ switch ($method):
       }
 
       //Delete Message
-      $delete_messages_query = "DELETE FROM " . $messages_table ." WHERE (s_id = '".$u_id."' AND r_id = '".$c_id."') OR (r_id = '".$u_id."' AND s_id = '".$c_id."');";
-      $messages_to_delete = pg_query($conn, $delete_messages_query);
-      if(pg_fetch_row($messages_to_delete)){
+      $count_messages_query = "SELECT  COUNT(*) FROM " . $messages_table ." WHERE (s_id = '".$u_id."' AND r_id = '".$c_id."') OR (r_id = '".$u_id."' AND s_id = '".$c_id."');";
+      $count_messages = pg_query($conn, $count_messages_query);
+      if(count_messages > 0){
+         $delete_messages_query = "DELETE FROM " . $messages_table ." WHERE (s_id = '".$u_id."' AND r_id = '".$c_id."') OR (r_id = '".$u_id."' AND s_id = '".$c_id."');";
+         pg_query($conn, $delete_messages_query);
          $output = array(
             'status_code' => 200,
             'message' => "All messages deleted"
