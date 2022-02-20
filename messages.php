@@ -43,7 +43,7 @@ switch ($method):
       pg_query($conn, $update_read_field);
 
       //get all messages
-      $load_messages = "SELECT * FROM " . $messages_table ." WHERE (s_id = '".$u_id."' AND r_id = '".$r_uid."') OR (r_id = '".$u_id."' AND s_id = '".$r_uid."');";
+      $load_messages = "SELECT * FROM " . $messages_table ." WHERE (s_id = '".$u_id."' AND r_id = '".$r_uid."') OR (r_id = '".$u_id."' AND s_id = '".$r_uid."') ORDER BY date ASC;";
       $results = pg_query($conn, $load_messages);
       $messages_array = array();
 
