@@ -64,7 +64,7 @@ switch ($method):
         $raw=file_get_contents('php://input');
         $data=json_decode($raw,true);
         $token = $data['token'];
-        $r_uid = $data['phone_number'];
+        $phone_number = $data['phone_number'];
 
         $query = "SELECT u_id FROM " . $users_table ." WHERE token = '".$token."'";
         $result = pg_query($conn, $query);
@@ -73,10 +73,10 @@ switch ($method):
             $u_id  = $row[0];
             echo($u_id);
         }
-        $query2 = "SELECT u_id FROM " . $users_table ." WHERE phone_number = '".$r_uid."'";
+        $query2 = "SELECT u_id FROM " . $users_table ." WHERE phone_number = '".$phone_number."'";
         $result2 = pg_query($conn, $query2);
         if($r = pg_fetch_row($result2)) {
-            $r_uid  = $row[0];
+            $r_uid = $row[0];
             echo($r_uid);
             echo("Done");
         }
