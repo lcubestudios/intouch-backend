@@ -19,7 +19,7 @@ switch ($method):
    case 'POST':
       $users_table = 'public.users';
       $contacts_table = 'public.contacts';
-      $messages_table = 'publis.messages'
+      $messages_table = 'publis.messages';
       
       //Load Contact information
       $raw=file_get_contents('php://input');
