@@ -48,22 +48,23 @@ switch ($method):
       $load_messages = "SELECT * FROM " . $messages_table ." WHERE (s_id = '".$u_id."' AND r_id = '".$c_id."') OR (r_id = '".$u_id."' AND s_id = '".$c_id."');";
       $results = pg_query($conn, $load_messages);
       $messages_array = array();
+      echo("test");
 
-      while ($row = pg_fetch_row($results)) {
-         array_push($messages_array, array( 
-         "sender_id" = $row[0],
-         "receiver_id" = $row[1],
-         "body_text" = $row[2],
-         "messages_read" = $row[3],
-         "date_message" = $row[4],
-         "message_id" = $row[5]
-         ));
-      }
-      //Output Contacts
-      $output = array(
-         'status_code' => 200,
-         'contacts' => $messages_array
-      );
+      // while ($row = pg_fetch_row($results)) {
+      //    array_push($messages_array, array( 
+      //    "sender_id" = $row[0],
+      //    "receiver_id" = $row[1],
+      //    "body_text" = $row[2],
+      //    "messages_read" = $row[3],
+      //    "date_message" = $row[4],
+      //    "message_id" = $row[5]
+      //    ));
+      // }
+      // //Output Contacts
+      // $output = array(
+      //    'status_code' => 200,
+      //    'contacts' => $messages_array
+      // );
   
    break;
    case 'POST':
