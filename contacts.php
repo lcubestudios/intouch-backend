@@ -91,12 +91,13 @@ switch ($method):
             echo("Contact exists");
         }
         // Create Relationship
+        else{
             $query4 = "INSERT INTO " . $contacts_table . " (u_id, c_uid) VALUES ('". $u_id."', '".$r_uid."')";
             #$query5 = "INSERT INTO " . $contacts_table . " (c_id, u_uid) VALUES ('". $r_id."', '".$u_uid."')";
             pg_query($conn, $query4);
             #pg_query($conn, $query5);
             echo("Contact added");
-
+        }
         pg_close($conn);
     break;
     case 'DELETE':
