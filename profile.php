@@ -11,7 +11,7 @@ if($method === "PUT"){
 	$raw = file_get_contents('php://input');
 	$data = json_decode($raw, true);
 
-	print_r($headers);
+	echo $headers['Authorization'];
 
 	echo json_encode($output);
 
