@@ -11,7 +11,7 @@ if($method === "PUT"){
 	$raw = file_get_contents('php://input');
 	$data = json_decode($raw, true);
 
-	$token = preg_split(' ', $headers['Authorization'])[1];
+	$token = preg_split('/\s/', $headers['Authorization'])[1];
 
 	echo $token;
 
