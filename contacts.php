@@ -119,10 +119,10 @@ switch ($method):
         $query2 = "SELECT u_id FROM " . $table ." WHERE phone_number = '".$phone_number."';";
         $result2 = pg_query($conn, $query2);
         while ($row = pg_fetch_row($result2)) {
-            $c_id  = $row[0];
+            $c_uid  = $row[0];
         }
 
-        $delete_relationship="DELETE FROM " . $table2 ." WHERE (u_id = '".$u_id."' AND c_uid = '".$c_id."');";
+        $delete_relationship="DELETE FROM " . $table2 ." WHERE (u_id = '".$u_id."' AND c_uid = '".$c_uid."');";
         $result = pg_query($conn, $delete_relationship);
          
         //Output Contacts
