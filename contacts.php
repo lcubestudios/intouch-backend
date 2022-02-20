@@ -51,9 +51,34 @@ switch ($method):
 				'message' => 'Please log back in again',
 			);
 		}
-    
+        
     echo json_encode($output);
 	pg_close($conn);
+    break;
+
+    case 'POST':
+        $users_table = 'public.users';
+        $contacts_table = 'public.contacts';
+        
+        //Load Contact information
+        $raw=file_get_contents('php://input');
+        $data=json_decode($raw,true);
+        $token = $data['token'];
+        $r_uid = $data['phone_number'];
+
+        $query = "SELECT u_id FROM " . $users_table ." WHERE token = '".$token."'";
+        $result = pg_query($conn, $query);
+    
+        if($row = pg_fetch_row($result)) {
+            $u_id  = $row[0];
+        }
+        $query2 = "SELECT u_id FROM " . $users_table ." WHERE phone_number = '".$r_uid."'";
+        $result2 = pg_query($conn, $query2);
+        if($r = pg_fetch_row($result2)) {
+            $r_uid  = $row[0];
+            echo($r_uid);
+        }
+        pg_close($conn);
     break;
     case 'DELETE':
         $users_table = 'public.users';
