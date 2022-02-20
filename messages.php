@@ -50,21 +50,21 @@ switch ($method):
       $messages_array = array();
       echo("test");
 
-      while ($row = pg_fetch_row($results)) {
-         array_push($messages_array, array( 
-         "sender_id" = $row[0],
-         "receiver_id" = $row[1],
-         "body_text" = $row[2],
-         "messages_read" = $row[3],
-         "date_message" = $row[4],
-         "message_id" = $row[5]
-         ));
-      }
-      //Output Contacts
-      $output = array(
-         'status_code' => 200,
-         'contacts' => $messages_array
-      );
+      // while ($row = pg_fetch_row($results)) {
+      //    array_push($messages_array, array( 
+      //    "sender_id" = $row[0],
+      //    "receiver_id" = $row[1],
+      //    "body_text" = $row[2],
+      //    "messages_read" = $row[3],
+      //    "date_message" = $row[4],
+      //    "message_id" = $row[5]
+      //    ));
+      // }
+      // //Output Contacts
+      // $output = array(
+      //    'status_code' => 200,
+      //    'contacts' => $messages_array
+      // );
   
    break;
    case 'POST':
