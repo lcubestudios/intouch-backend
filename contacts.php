@@ -87,7 +87,7 @@ switch ($method):
         }
 
         //Check if Relationship exists
-        $query3 = "SELECT u_id, c_uid FROM '" . $contacts_table ."' WHERE u_id = '".$u_id."' AND c_uid = '".$r_uid."'" ;
+        $query3 = "SELECT u_id, c_uid FROM " . $contacts_table ." WHERE u_id = '".$u_id."' AND c_uid = '".$r_uid."'" ;
         $result3 = pg_query($conn, $query3);
         if(pg_fetch_row($result3)){
             echo("The number already exists in your contact list");
