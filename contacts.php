@@ -75,7 +75,6 @@ switch ($method):
     
         if($row = pg_fetch_row($result)) {
             $u_id  = $row[0];
-            echo($u_id);
         }
 
         //Load Reciever user id
@@ -83,16 +82,21 @@ switch ($method):
         $result2 = pg_query($conn, $query2);
         if($r = pg_fetch_row($result2)) {
             $r_uid = $r[0];
-            echo($r_uid);
         }
 
         //Check if Relationship exists
         $query3 = "SELECT u_id, c_uid FROM " . $contacts_table ." WHERE u_id = '".$u_id."' AND c_uid = '".$r_uid."'" ;
         $result3 = pg_query($conn, $query3);
         if(pg_fetch_row($result3)){
-            echo("The number already exists in your contact list");
-        }else{
-            echo("Contact have been added");
+            echo("Contact exists");
+        }
+        // Create Relationship
+        else{
+            $query4 = "INSERT INTO " . $contacts_table . " (u_id, c_uid) VALUES ('". $u_id."', '".$r_uid."')";
+            $query5 = "INSERT INTO " . $contacts_table . " (c_id, u_uid) VALUES ('". $r_id."', '".$u_uid."')";
+            pg_query($conn, $query4);
+            pg_query($conn, $query5);
+            echo("Contact added");
         }
 
         pg_close($conn);
