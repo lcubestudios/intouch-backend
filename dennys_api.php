@@ -77,14 +77,10 @@ function GettingTotalUnread(){
             $c_id  = "$row[0]\n";
     }
     $query3 = "SELECT COUNT(*) FROM " . $table3 ." WHERE (r_read = FALSE AND s_id = '". $u_id."' AND r_id = '". $c_id."');";
-    //$query3 = "SELECT u_id FROM " . $table ." WHERE phone_number = '".$phone_number."';";
     $result3 = pg_query($conn, $query3);
     $row = pg_fetch_row($result3);
     echo "the number of unread messages from $u_id to $c_id is: ";
-    echo "$row[0]\n";
-    //SELECT COUNT(*) FROM "public"."messages" WHERE r_read = FALSE;
-    //SELECT COUNT(*) FROM "public"."messages" WHERE (r_read = FALSE AND s_id = 1 AND r_id = 3);
-    
+    echo "$row[0]\n"; 
 }
 
 function GetMessages(){
@@ -126,26 +122,8 @@ function GetMessages(){
         $date_message = "$row[4]";
         $message_id = "$row[5]";
 
-        //getting the name and lastname of the sender
-        $query_sender = "SELECT first_name,last_name FROM " . $table ." WHERE u_id = '".$sender_id."';";
-        $result_sender = pg_query($conn, $query_sender);
-        while ($row = pg_fetch_row($result_sender)) {
-            $sender_name = "$row[0]";
-            $sender_lastname = "$row[1]";
-            $sender = "$sender_name $sender_lastname";
-        }
-     
-        //getting the name and lastname of the receiver
-        $query_receiver = "SELECT first_name,last_name FROM " . $table ." WHERE u_id = '".$receiver_id."';";
-        $result_receiver = pg_query($conn, $query_receiver);
-        while ($row = pg_fetch_row($result_receiver)) {
-                $receiver_name = "$row[0]";
-                $receiver_lastname = "$row[1]";
-                $receiver = "$receiver_name $receiver_lastname";
-            }
-
         //get all messages in json format
-        $datos=array("sender"=>$sender,"s_id"=>$sender_id,"receiver"=>$receiver,"r_id"=>$receiver_id,"body_text"=>$body_text,"r_read"=>$messages_read,"date"=>$date_message,"m_id"=>$message_id);
+        $datos=array("s_id"=>$sender_id,"r_id"=>$receiver_id,"body_text"=>$body_text,"r_read"=>$messages_read,"date"=>$date_message,"m_id"=>$message_id);
         echo json_encode ($datos, JSON_PRETTY_PRINT);
         echo "\n";
         }
