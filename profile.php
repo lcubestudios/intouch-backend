@@ -18,7 +18,7 @@ if ($method === "PUT") {
 
 	$query = "UPDATE " . $table . "
 		SET first_name = " . $first_name . ", last_name = " . $last_name . " 
-		WHERE token = " . $token;
+		WHERE token = '" . $token . "'";
 
 	$result = pg_query($conn, $query);
 
