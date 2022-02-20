@@ -17,7 +17,7 @@ if ($method === "PUT") {
 	$token = preg_split('/\s/', $headers['Authorization'])[1];
 
 	$query = "UPDATE " . $table . "
-		SET first_name = " . $first_name . ", last_name = " . $last_name . " 
+		SET first_name = '" . $first_name . "', last_name = '" . $last_name . "' 
 		WHERE token = '" . $token . "'";
 
 	$result = pg_query($conn, $query);
