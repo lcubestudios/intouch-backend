@@ -136,7 +136,7 @@ switch ($method):
       //Output Contacts
       $output = array(
          'status_code' => 200,
-         'message' => "deleting messages"
+         'message' => "All messages deleted"
      );
    echo json_encode($output);
 	pg_close($conn);
