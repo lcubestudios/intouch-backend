@@ -9,10 +9,9 @@ switch ($method):
         echo"";
         break;    
     case 'DELETE':
-        echo("Deleting the user guy \n");
-        DeleteRelationship();
+        //DeleteRelationship();
         //DeleteContact();
-        //DeleteMessages();
+        DeleteMessages();
         break;
 endswitch;
 
