@@ -27,15 +27,20 @@ if($method === "GET"){
             $query3 = "SELECT phone_number, first_name, last_name FROM " . $users_table. " WHERE u_id = '". $c_uid. "'";
             $result3 = pg_query($conn, $query3);
             if($r3 = pg_fetch_row($result3)) {
-                $data = array_push($contact_array,$r3);
-                echo json_encode($data);
+               $phone_number = $r3['phone_number'];
+               $first_name = $r3['first_name'];
+               $last_name = $r3['last_name'];
+               echo("DOne");
             }
         }
         
         
         //Output Contacts
         $output = array(
-            'status_code' => 200
+            'status_code' => 200,
+            'phone_number' => $phone_number,
+            'first_name' => $first_name,
+            'last_name' => $last_name
         );
     }
     
