@@ -105,6 +105,44 @@ switch ($method):
 	pg_close($conn);
    break;
 
+   case 'DELETE':
+      $users_table = 'public.users';
+      $contacts_table = 'public.contacts';
+      $messages_table = 'public.messages';
+      
+      //Load Contact information
+      $raw=file_get_contents('php://input');
+      $data=json_decode($raw,true);
+      $token = $data['token'];
+      $phone_number = $data['phone_number'];
+
+      //Load User id 
+      $query = "SELECT u_id FROM " . $users_table ." WHERE token = '".$token."'";
+      $result = pg_query($conn, $query);
+      if($row = pg_fetch_row($result)) {
+          $u_id  = $row[0];
+      }
+
+      //Load Reciever user id
+      $query2 = "SELECT u_id FROM " . $users_table ." WHERE phone_number = '".$phone_number."'";
+      $result2 = pg_query($conn, $query2);
+      if($r = pg_fetch_row($result2)) {
+         $c_id  = "$r[0]\n";
+      }
+
+      //Insert Message
+      $query3 = "DELETE FROM " . $table3 ." WHERE (s_id = '".$u_id."' AND r_id = '".$c_id."') OR (r_id = '".$u_id."' AND s_id = '".$c_id."');";
+      pg_query($conn, $query3);
+      //Output Contacts
+      $output = array(
+         'status_code' => 200,
+         'message' => "deleting messages"
+     );
+   echo json_encode($output);
+	pg_close($conn);
+   break;
+
+
 endswitch;  
   
 ?>
