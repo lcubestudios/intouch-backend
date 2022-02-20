@@ -130,14 +130,19 @@ switch ($method):
          $c_id  = "$r[0]\n";
       }
 
-      //Insert Message
+      //Delete Message
       $query3 = "DELETE FROM " . $messages_table ." WHERE (s_id = '".$u_id."' AND r_id = '".$c_id."') OR (r_id = '".$u_id."' AND s_id = '".$c_id."');";
-      pg_query($conn, $query3);
-      //Output Contacts
-      $output = array(
-         'status_code' => 200,
-         'message' => "All messages deleted"
-     );
+      if(pg_query($conn, $query3)){
+         //Output Contacts
+         $output = array(
+            'status_code' => 200,
+            'message' => "All messages deleted"
+         );
+      }else{
+         $output = array(
+            'status_code' => 500,
+            'message' => "No messages found"
+      }
    echo json_encode($output);
 	pg_close($conn);
    break;
