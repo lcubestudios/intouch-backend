@@ -27,11 +27,9 @@ if($method === "GET"){
             $query3 = "SELECT phone_number, first_name, last_name FROM " . $users_table. " WHERE u_id = '". $c_uid. "'";
             $result3 = pg_query($conn, $query3);
             if($r3 = pg_fetch_row($result3)) {
-                print_r($r3);
-               #$phone_number = $r3['phone_number'];
-               #$first_name = $r3['first_name'];
-               #$last_name = $r3['last_name'];
-               echo("DOne");
+               $phone_number = $r3[0];
+               $first_name = $r3[1];
+               $last_name = $r3[2];
             }
         }
         
