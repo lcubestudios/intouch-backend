@@ -33,29 +33,35 @@ function Getting(){
     $query2 = "SELECT body_text,date,r_read,r_id FROM " . $table3 ." WHERE s_id = '".$u_id."';";
     $result2 = pg_query($conn, $query2);
     while ($row = pg_fetch_row($result2)) {
-        echo "\n the u_id is: ";
-        echo $u_id;
+        //echo "\n the u_id is: ";
+        //echo $u_id;
         $messages = "$row[0]";
-        echo "\nthe message is: ";
-        echo $messages;
+        //echo "\nthe message is: ";
+        //echo $messages;
         $date_message = "$row[1]";
-        echo "\nthe date is: ";
-        echo $date_message;
+        //echo "\nthe date is: ";
+        //echo $date_message;
         $r_read = "$row[2]";
-        echo "\nthe Message was read: ";
-        echo $r_read;
+        //echo "\nthe Message was read: ";
+        //echo $r_read;
         $r_id = "$row[3]";
-        echo "\nthe receiber id is: ";
-        echo $r_id;
+        //echo "\nthe receiber id is: ";
+        //echo $r_id;
 
         $query3 = "SELECT phone_number FROM " . $table ." WHERE u_id = '".$r_id."';";
         $result3 = pg_query($conn, $query3);
         while ($rowe = pg_fetch_row($result3)) {
             $phone_number = "$rowe[0]";
-            echo "\nthe phone number is: ";
-            echo $phone_number;
-            echo "\n";
+            //echo "\nthe phone number is: ";
+            //echo $phone_number;
+            //echo "\n";
         }
+        //$datos=["phone_number:",$phone_number,"r_id :",$r_id];
+        //echo json_encode ($datos, JSON_PRETTY_PRINT);
+
+        $datos=array("uid"=>$r_id,"phone_number"=>$phone_number,"unread_count"=>$r_read,"last_message"=>["body"=>$messages,"dt_created"=>$date_message,"timestamp"=>$date_message]);
+        echo json_encode ($datos, JSON_PRETTY_PRINT);
+        echo "\n";
     }
 
 }
