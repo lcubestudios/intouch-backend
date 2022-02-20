@@ -74,9 +74,7 @@ function GetMessages(){
     $result2 = pg_query($conn, $query2);
     while ($row = pg_fetch_row($result2)) {
             $c_id  = "$row[0]\n";
-            echo "the u_id is: ";
-            echo $c_id;
-        }
+    }
 
     //get all messages
     $query3 = "SELECT * FROM " . $table3 ." WHERE (s_id = '".$u_id."' AND r_id = '".$c_id."') OR (r_id = '".$u_id."' AND s_id = '".$c_id."');";
@@ -89,8 +87,25 @@ function GetMessages(){
         $date_message = "$row[4]";
         $message_id = "$row[5]";
 
+        //getting the name and lastname of the sender
+        $query_sender = "SELECT first_name,last_name FROM " . $table ." WHERE u_id = '".$sender_id."';";
+        $result_sender = pg_query($conn, $query_sender);
+        while ($row = pg_fetch_row($result_sender)) {
+            $sender_name = "$row[0]";
+            $sender_lastname = "$row[1]";
+            $sender = "$sender_name $sender_lastname";
+        }
+     
+        //getting the name and lastname of the receiver
+        $query_receiver = "SELECT first_name,last_name FROM " . $table ." WHERE u_id = '".$receiver_id."';";
+        $result_receiver = pg_query($conn, $query_receiver);
+        while ($row = pg_fetch_row($result_receiver)) {
+                $receiver_name = "$row[0]";
+                $receiver_lastname = "$row[1]";
+                $receiver = "$receiver_name $receiver_lastname";
+            }
         //get all messages in json format
-        $datos=array("s_id"=>$sender_id,"r_id"=>$receiver_id,"body_text"=>$body_text,"r_read"=>$messages_read,"date"=>$date_message,"m_id"=>$message_id);
+        $datos=array("sender"=>$sender,"s_id"=>$sender_id,"receiver"=>$receiver,"r_id"=>$receiver_id,"body_text"=>$body_text,"r_read"=>$messages_read,"date"=>$date_message,"m_id"=>$message_id);
         echo json_encode ($datos, JSON_PRETTY_PRINT);
         echo "\n";
         }
