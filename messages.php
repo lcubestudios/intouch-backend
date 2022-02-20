@@ -133,7 +133,7 @@ switch ($method):
       //Delete Message
       $count_messages_query = "SELECT  COUNT(*) FROM " . $messages_table ." WHERE (s_id = '".$u_id."' AND r_id = '".$c_id."') OR (r_id = '".$u_id."' AND s_id = '".$c_id."');";
       $count_messages = pg_query($conn, $count_messages_query);
-      $row = pg_fetch_row($result);
+      $row = pg_fetch_row($count_messages);
       print_r($row);
       $output = "Done";
       // if(something > 0){
