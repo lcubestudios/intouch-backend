@@ -4,10 +4,11 @@ require('./config.php');
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Headers: *");
 
-if($method === "POST"){
-	$output = array();
+$output = array();
+$table = 'public.users';
+
+if ($method === "POST"){
 	$purpose = $_GET['purpose'];
-	$table = 'public.users';
 
 	// LOGIN
 	if ($purpose === 'login') {
@@ -52,7 +53,6 @@ if($method === "POST"){
 
 		$token = bin2hex(openssl_random_pseudo_bytes(20));
 
-
 		$query = "INSERT INTO " . $table . " (first_name, last_name, phone_number, password, token)
 			VALUES ('". $first_name ."', '". $last_name ."', '". $phone_number ."', '". $password ."', '". $token ."')";
 
@@ -85,9 +85,15 @@ if($method === "POST"){
 			'message' => 'Invalid Request',
 		);
 	}
-
-	echo json_encode($output);
-
-	pg_close($conn);
 }
+else {
+	$output = array(
+		'status_code' => 500,
+		'message' => 'Invalid Request.',
+	);
+}
+
+echo json_encode($output);
+
+pg_close($conn);
 ?>

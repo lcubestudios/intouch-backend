@@ -4,9 +4,10 @@ require('./config.php');
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Headers: *");
 
+$output = array();
+$table = 'public.users';
+
 if ($method === "PUT") {
-	$output = array();
-	$table = 'public.users';
 	$headers = getallheaders();
 	$raw = file_get_contents('php://input');
 	$data = json_decode($raw, true);
@@ -19,7 +20,7 @@ if ($method === "PUT") {
 	$query = "UPDATE " . $table . "
 		SET first_name = '" . $first_name . "', last_name = '" . $last_name . "' 
 		WHERE token = '" . $token . "'
-		RETURNING *";
+		RETURNING first_name, last_name, phone_number, token";
 
 	$result = pg_query($conn, $query);
 
@@ -36,9 +37,15 @@ if ($method === "PUT") {
 			'message' => 'User not found.',
 		);
 	}
-
-	echo json_encode($output);
-
-	pg_close($conn);
 }
+else {
+	$output = array(
+		'status_code' => 500,
+		'message' => 'Invalid Request.',
+	);
+}
+
+echo json_encode($output);
+
+pg_close($conn);
 ?>
