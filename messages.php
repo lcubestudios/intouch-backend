@@ -37,8 +37,6 @@ switch ($method):
       $result2 = pg_query($conn, $load_reciever_id);
       if($r = pg_fetch_row($result2)) {
          $r_uid = $r[0];
-         $r_first_name = $r[1];
-         $r_last_name = $r[2];
       }
       //Update READ field
       $update_read_field = "UPDATE " . $messages_table ." SET r_read = TRUE WHERE (s_id = '".$u_id."' AND r_id = '".$r_uid."');";
@@ -48,23 +46,22 @@ switch ($method):
       $load_messages = "SELECT * FROM " . $messages_table ." WHERE (s_id = '".$u_id."' AND r_id = '".$r_uid."') OR (r_id = '".$u_id."' AND s_id = '".$r_uid."');";
       $results = pg_query($conn, $load_messages);
       $messages_array = array();
-      echo("test");
 
-      // while ($row = pg_fetch_row($results)) {
-      //    array_push($messages_array, array( 
-      //    "sender_id" = $row[0],
-      //    "receiver_id" = $row[1],
-      //    "body_text" = $row[2],
-      //    "messages_read" = $row[3],
-      //    "date_message" = $row[4],
-      //    "message_id" = $row[5]
-      //    ));
-      // }
-      // //Output Contacts
-      // $output = array(
-      //    'status_code' => 200,
-      //    'contacts' => $messages_array
-      // );
+      while ($row = pg_fetch_row($results)) {
+         array_push($messages_array, array( 
+            "sender_id" => $row[0],
+            "receiver_id" => $row[1],
+            "body_text" => $row[2],
+            "messages_read" => $row[3],
+            "date_message" => $row[4],
+            "message_id" => $row[5]
+         ));
+      }
+      //Output Contacts
+      $output = array(
+         'status_code' => 200,
+         'contacts' => $messages_array
+      );
   
    break;
    case 'POST':
