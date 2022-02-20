@@ -33,7 +33,8 @@ switch ($method):
                 array_push($contact_array, array(
                     "phone_number" => $r3[0],
                     "first_name" => $r3[1],
-                    "last_name" => $r3[2]
+                    "last_name" => $r3[2],
+                    "u_id" => $u_id
                 ));
             }
         }
