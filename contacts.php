@@ -130,6 +130,7 @@ switch ($method):
             'status_code' => 200,
             'message' => 'Contact has been deleted!'
         );
+        echo json_encode($output);
         pg_close($conn);
 endswitch;
 ?>
