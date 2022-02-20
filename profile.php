@@ -20,6 +20,8 @@ if ($method === "PUT") {
 		SET first_name = '" . $first_name . "', last_name = '" . $last_name . "' 
 		WHERE token = '" . $token . "'";
 
+	echo $query;
+
 	$result = pg_query($conn, $query);
 
 	if ($row = pg_fetch_assoc($result)) {
