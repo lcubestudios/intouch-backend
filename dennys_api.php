@@ -77,7 +77,7 @@ function GetMessages(){
     }
 
     $query_update = "UPDATE " . $table3 ." SET r_read = TRUE WHERE s_id = '".$u_id."';";
-    $result_update = pg_query($conn, $query_update);
+    pg_query($conn, $query_update);
 
     //get all messages
     $query3 = "SELECT * FROM " . $table3 ." WHERE (s_id = '".$u_id."' AND r_id = '".$c_id."') OR (r_id = '".$u_id."' AND s_id = '".$c_id."');";
