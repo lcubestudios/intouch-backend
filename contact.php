@@ -19,23 +19,22 @@ if($method === "GET"){
     
         $query2 = "SELECT c_uid FROM " . $contacts_table. " WHERE u_id = '". $u_id. "'";
         $result2 = pg_query($conn, $query2);
-        
+        $contact_array = array();
+
         // Load Contacts information
         while ($r = pg_fetch_row($result2)) {
             $c_uid  = $r[0];
             $query3 = "SELECT phone_number, first_name, last_name FROM " . $users_table. " WHERE u_id = '". $c_uid. "'";
             $result3 = pg_query($conn, $query3);
             while($r3 = pg_fetch_row($result3)) {
-                print_r(r3);
-                $phone_number = $r3[0];
-                $first_name = $r3[1];
-                $last_name = $r3[2];
+                print_r($r3);
+                // $phone_number = $r3[0];
+                // $first_name = $r3[1];
+                // $last_name = $r3[2];
+
+                array_push($contact_array, $r3);
             }
         }
-        $contact_array = array();
-        $contact_array['phone_number'] = $phone_number;
-        $contact_array['first_name'] = $first_name;
-        $contact_array['last_name'] = $last_name;
 
          //Output Contacts
          $output = array(
