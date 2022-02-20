@@ -134,21 +134,19 @@ switch ($method):
       $count_messages_query = "SELECT  COUNT(*) FROM " . $messages_table ." WHERE (s_id = '".$u_id."' AND r_id = '".$c_id."') OR (r_id = '".$u_id."' AND s_id = '".$c_id."');";
       $count_messages = pg_query($conn, $count_messages_query);
       $row = pg_fetch_row($count_messages);
-      print_r($row);
-      $output = "Done";
-      // if(something > 0){
-      //    $delete_messages_query = "DELETE FROM " . $messages_table ." WHERE (s_id = '".$u_id."' AND r_id = '".$c_id."') OR (r_id = '".$u_id."' AND s_id = '".$c_id."');";
-      //    pg_query($conn, $delete_messages_query);
-      //    $output = array(
-      //       'status_code' => 200,
-      //       'message' => "All messages deleted"
-      //    );
-      // }else{
-      //    $output = array(
-      //       'status_code' => 500,
-      //       'message' => "No messages found"
-      //    );
-      // }
+      if($row[0] > 0){
+         $delete_messages_query = "DELETE FROM " . $messages_table ." WHERE (s_id = '".$u_id."' AND r_id = '".$c_id."') OR (r_id = '".$u_id."' AND s_id = '".$c_id."');";
+         pg_query($conn, $delete_messages_query);
+         $output = array(
+            'status_code' => 200,
+            'message' => "All messages deleted"
+         );
+      }else{
+         $output = array(
+            'status_code' => 500,
+            'message' => "No messages found"
+         );
+      }
    echo json_encode($output);
 	pg_close($conn);
    break;
