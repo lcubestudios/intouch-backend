@@ -54,7 +54,8 @@ switch ($method):
             "body_text" => $row[2],
             "messages_read" => $row[3],
             "date_message" => $row[4],
-            "message_id" => $row[5]
+            "message_id" => $row[5],
+            "is_sender" => $row[0] === $u_id ? true:false
          ));
       }
       //Output Contacts
