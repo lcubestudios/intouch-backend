@@ -19,7 +19,6 @@ if($method === "GET"){
     
         $query2 = "SELECT c_uid FROM " . $contacts_table. " WHERE u_id = '". $u_id. "'";
         $result2 = pg_query($conn, $query2);
-        $contact_array = array();
         
         // Load Contacts information
         while ($r = pg_fetch_row($result2)) {
@@ -27,19 +26,20 @@ if($method === "GET"){
             $query3 = "SELECT phone_number, first_name, last_name FROM " . $users_table. " WHERE u_id = '". $c_uid. "'";
             $result3 = pg_query($conn, $query3);
             if($r3 = pg_fetch_row($result3)) {
-               $phone_number = $r3[0];
-               $first_name = $r3[1];
-               $last_name = $r3[2];
+                $phone_number = $r3[0];
+                $first_name = $r3[1];
+                $last_name = $r3[2];
             }
         }
-        
-        
-        //Output Contacts
-        $output = array(
+        $contact_array = array();
+        $contact_array['phone_number'] = $phone_number;
+        $contact_array['first_name'] = $first_name;
+        $contact_array['last_name'] = $last_name;
+
+         //Output Contacts
+         $output = array(
             'status_code' => 200,
-            'phone_number' => $phone_number,
-            'first_name' => $first_name,
-            'last_name' => $last_name
+            'contacts' => $contact_array
         );
     }
     
