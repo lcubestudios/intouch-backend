@@ -71,12 +71,14 @@ switch ($method):
     
         if($row = pg_fetch_row($result)) {
             $u_id  = $row[0];
+            echo($u_id);
         }
         $query2 = "SELECT u_id FROM " . $users_table ." WHERE phone_number = '".$r_uid."'";
         $result2 = pg_query($conn, $query2);
         if($r = pg_fetch_row($result2)) {
             $r_uid  = $row[0];
             echo($r_uid);
+            echo("Done");
         }
         pg_close($conn);
     break;
