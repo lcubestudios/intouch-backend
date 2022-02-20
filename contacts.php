@@ -72,8 +72,8 @@ switch ($method):
                 $u_id  = $row[0];
                 echo $u_id;
             }
-        #$delete_relationship="DELETE FROM " . $contacts_table ." WHERE u_id = '".$u_id."' ;";
-        #$result = pg_query($conn, $delete_relationship);
+        $delete_relationship="DELETE FROM " . $contacts_table ." WHERE u_id = '".$u_id."' ;";
+        $result = pg_query($conn, $delete_relationship);
         pg_close($conn);
 endswitch;
 ?>
