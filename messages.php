@@ -62,7 +62,8 @@ switch ($method):
          'status_code' => 200,
          'contacts' => $messages_array
       );
-  
+   echo json_encode($output);
+	pg_close($conn);
    break;
    case 'POST':
       $users_table = 'public.users';
