@@ -26,10 +26,9 @@ if($method === "GET"){
             $c_uid  = $r[0];
             $query3 = "SELECT phone_number, first_name, last_name FROM " . $users_table. " WHERE u_id = '". $c_uid. "'";
             $result3 = pg_query($conn, $query3);
-            while ($r3 = pg_fetch_row($result3)) {
+            if($r3 = pg_fetch_row($result3)) {
                 $data = array_push($contact_array,$r3);
                 echo json_encode($data);
-
             }
         }
         
