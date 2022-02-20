@@ -131,7 +131,7 @@ switch ($method):
       }
 
       //Insert Message
-      $query3 = "DELETE FROM " . $table3 ." WHERE (s_id = '".$u_id."' AND r_id = '".$c_id."') OR (r_id = '".$u_id."' AND s_id = '".$c_id."');";
+      $query3 = "DELETE FROM " . $messages_table ." WHERE (s_id = '".$u_id."' AND r_id = '".$c_id."') OR (r_id = '".$u_id."' AND s_id = '".$c_id."');";
       pg_query($conn, $query3);
       //Output Contacts
       $output = array(
