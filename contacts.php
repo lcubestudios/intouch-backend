@@ -116,13 +116,13 @@ switch ($method):
                 $u_id  = $row[0];
         }
         //getting the c_id from phone_number
-        $query2 = "SELECT u_id FROM " . $table ." WHERE phone_number = '".$phone_number."';";
+        $query2 = "SELECT u_id FROM " . $users_table ." WHERE phone_number = '".$phone_number."';";
         $result2 = pg_query($conn, $query2);
         while ($row = pg_fetch_row($result2)) {
             $c_uid  = $row[0];
         }
 
-        $delete_relationship="DELETE FROM " . $table2 ." WHERE (u_id = '".$u_id."' AND c_uid = '".$c_uid."');";
+        $delete_relationship="DELETE FROM " . $contacts_table ." WHERE (u_id = '".$u_id."' AND c_uid = '".$c_uid."');";
         $result = pg_query($conn, $delete_relationship);
          
         //Output Contacts
