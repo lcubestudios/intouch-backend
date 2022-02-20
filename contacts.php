@@ -66,6 +66,7 @@ switch ($method):
         $token = $data['token'];
         $phone_number = $data['phone_number'];
 
+        //Load User id 
         $query = "SELECT u_id FROM " . $users_table ." WHERE token = '".$token."'";
         $result = pg_query($conn, $query);
     
@@ -73,13 +74,24 @@ switch ($method):
             $u_id  = $row[0];
             echo($u_id);
         }
+
+        //Load Reciever user id
         $query2 = "SELECT u_id FROM " . $users_table ." WHERE phone_number = '".$phone_number."'";
         $result2 = pg_query($conn, $query2);
         if($r = pg_fetch_row($result2)) {
             $r_uid = $r[0];
             echo($r_uid);
-            echo("Done");
         }
+
+        //Check if Relationship exists
+        query3 = "SELECT u_id, c_uid FROM '" . $contacts_table ."' WHERE u_id = '".$u_id."' AND c_uid = '".$r_uid."'" ;
+        $result3 = pg_query($conn, $query3);
+        if(pg_fetch_row($result3)){
+            echo("The number already exists in your contact list");
+        }else{
+            echo("Contact have been added");
+        }
+
         pg_close($conn);
     break;
     case 'DELETE':
