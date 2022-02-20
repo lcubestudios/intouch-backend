@@ -1,7 +1,10 @@
 <?php
 require('./config.php');
 
-if($method === "GET"){
+$method = $_SERVER['REQUEST_METHOD'];
+
+switch ($method):
+    case 'GET':
     $output =  array();
     $users_table = 'public.users';
     $contacts_table = 'public.contacts';
@@ -51,8 +54,25 @@ if($method === "GET"){
 		}
     
     echo json_encode($output);
-
 	pg_close($conn);
-}
-
+    break;
+    case 'DELETE':
+        $users_table = 'public.users';
+        $contacts_table = 'public.contacts';
+    
+        $raw=file_get_contents('php://input');
+        $data=json_decode($raw,true);
+        $token = $data['token'];
+    
+        $query = "SELECT u_id FROM " . $users_table ." WHERE token = '".$token."';";
+        $result = pg_query($conn, $query);
+    
+        if($row = pg_fetch_row($result)) {
+                $u_id  = $row[0];
+                echo $u_id;
+            }
+        #$delete_relationship="DELETE FROM " . $contacts_table ." WHERE u_id = '".$u_id."' ;";
+        #$result = pg_query($conn, $delete_relationship);
+        pg_close($conn);
+endswitch;
 ?>
