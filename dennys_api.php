@@ -76,11 +76,15 @@ function GetMessages(){
             $c_id  = "$row[0]\n";
     }
 
+    $query_update = "UPDATE " . $table3 ." SET r_read = TRUE WHERE s_id = '".$u_id."';";
+    $result_update = pg_query($conn, $query_update);
+
     //get all messages
     $query3 = "SELECT * FROM " . $table3 ." WHERE (s_id = '".$u_id."' AND r_id = '".$c_id."') OR (r_id = '".$u_id."' AND s_id = '".$c_id."');";
     $result3 = pg_query($conn, $query3);
     while ($row = pg_fetch_row($result3)) {
         $sender_id = "$row[0]";
+        echo "this is the sender_id $sender_id";
         $receiver_id = "$row[1]";
         $body_text = "$row[2]";
         $messages_read = "$row[3]";
@@ -104,6 +108,7 @@ function GetMessages(){
                 $receiver_lastname = "$row[1]";
                 $receiver = "$receiver_name $receiver_lastname";
             }
+
         //get all messages in json format
         $datos=array("sender"=>$sender,"s_id"=>$sender_id,"receiver"=>$receiver,"r_id"=>$receiver_id,"body_text"=>$body_text,"r_read"=>$messages_read,"date"=>$date_message,"m_id"=>$message_id);
         echo json_encode ($datos, JSON_PRETTY_PRINT);
