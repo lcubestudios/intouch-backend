@@ -21,14 +21,13 @@ if ($method === "PUT") {
 		WHERE token = '" . $token . "'
 		RETURNING *";
 
-	echo $query;
-
 	$result = pg_query($conn, $query);
 
 	if ($row = pg_fetch_assoc($result)) {
 		$output = array(
 			'status_code' => 200,
 			'message' => 'Profile updated!',
+			'profile' => $row
 		);
 	}
 	else {
