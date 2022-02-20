@@ -13,7 +13,7 @@ if($method === "PUT"){
 
 	$token = str_split(' ', $headers['Authorization'])[1];
 
-	echo $token
+	echo $token;
 
 	echo json_encode($output);
 
