@@ -41,11 +41,11 @@ switch ($method):
          $r_last_name = $r[2];
       }
       //Update READ field
-      $update_read_field = "UPDATE " . $messages_table ." SET r_read = TRUE WHERE (s_id = '".$u_id."' AND r_id = '".$c_id."');";
+      $update_read_field = "UPDATE " . $messages_table ." SET r_read = TRUE WHERE (s_id = '".$u_id."' AND r_id = '".$r_uid."');";
       pg_query($conn, $update_read_field);
 
       //get all messages
-      $load_messages = "SELECT * FROM " . $messages_table ." WHERE (s_id = '".$u_id."' AND r_id = '".$c_id."') OR (r_id = '".$u_id."' AND s_id = '".$c_id."');";
+      $load_messages = "SELECT * FROM " . $messages_table ." WHERE (s_id = '".$u_id."' AND r_id = '".$c_id."') OR (r_id = '".$u_id."' AND s_id = '".$r_uid."');";
       $results = pg_query($conn, $load_messages);
       $messages_array = array();
       echo("test");
