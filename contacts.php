@@ -101,7 +101,7 @@ switch ($method):
         // Create Relationship
         else{
             $query4 = "INSERT INTO " . $contacts_table . " (u_id, c_uid) VALUES ('". $u_id."', '".$r_uid."')";
-            $query5 = "INSERT INTO " . $contacts_table . " (c_uid, u_id) VALUES ('". $r_uid."', '".$u_id."')";
+            $query5 = "INSERT INTO " . $contacts_table . " (c_uid, u_id) VALUES ('". $u_id."', '".$r_uid."')";
             pg_query($conn, $query4);
             pg_query($conn, $query5);
             $output = array(
