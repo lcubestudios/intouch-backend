@@ -29,7 +29,7 @@ switch ($method):
         // Load Contacts information
         while ($r = pg_fetch_row($result2)) {
             $c_uid  = $r[0];
-            $query3 = "SELECT phone_number, first_name, last_name FROM " . $users_table. " WHERE u_id = '". $c_uid. "'";
+            $query3 = "SELECT phone_number, first_name, last_name FROM " . $users_table. " WHERE u_id = '". $c_uid. "' ORDER BY date ASC; ";
             $result3 = pg_query($conn, $query3);
             while($r3 = pg_fetch_row($result3)) {
                 $query4 = "SELECT COUNT(*) FROM " . $messages_table ." WHERE (r_read = FALSE AND r_id = '". $u_id."' AND s_id = '". $c_uid."');";
