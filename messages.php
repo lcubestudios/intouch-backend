@@ -39,7 +39,7 @@ switch ($method):
          $r_uid = $r[0];
       }
       //Update READ field
-      $update_read_field = "UPDATE " . $messages_table ." SET r_read = TRUE WHERE (s_id = '".$u_id."' AND r_id = '".$r_uid."');";
+      $update_read_field = "UPDATE " . $messages_table ." SET r_read = TRUE WHERE (s_id = '".$r_uid."' AND r_id = '".$u_id."');";
       pg_query($conn, $update_read_field);
 
       //get all messages
