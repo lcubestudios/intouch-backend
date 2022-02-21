@@ -1,13 +1,10 @@
 <?php
 require('./config.php');
 
-header("Access-Control-Allow-Origin: *");
-header("Access-Control-Allow-Headers: *");
-
 $output = array();
 $table = 'public.users';
 
-if ($method === "PUT") {
+if ($method === "POST") {
 	$headers = getallheaders();
 	$raw = file_get_contents('php://input');
 	$data = json_decode($raw, true);
