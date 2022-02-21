@@ -61,7 +61,7 @@ switch ($method):
       //Output Contacts
       $output = array(
          'status_code' => 200,
-         'contacts' => $messages_array
+         'messages' => $messages_array
       );
    echo json_encode($output);
 	pg_close($conn);
