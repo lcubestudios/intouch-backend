@@ -143,7 +143,7 @@ switch ($method):
          );
       }else{
          $output = array(
-            'status_code' => 500,
+            'status_code' => 301,
             'message' => "No messages found"
          );
       }

@@ -93,7 +93,11 @@ switch ($method):
         $query3 = "SELECT u_id, c_uid FROM " . $contacts_table ." WHERE u_id = '".$u_id."' AND c_uid = '".$r_uid."'" ;
         $result3 = pg_query($conn, $query3);
         if(pg_fetch_row($result3)){
-            echo("Contact exists");
+            $output = array(
+                'status_code' => 301,
+                'message' => "Contact exist"
+             );
+            
         }
         // Create Relationship
         else{
@@ -101,8 +105,12 @@ switch ($method):
             $query5 = "INSERT INTO " . $contacts_table . " (c_id, u_uid) VALUES ('". $r_uid."', '".$u_uid."')";
             pg_query($conn, $query4);
             pg_query($conn, $query5);
-            echo("Contact added");
+            $output = array(
+                'status_code' => 200,
+                'message' => "Contact added"
+             );
         }
+        echo json_encode($output);
         pg_close($conn);
     break;
     case 'DELETE':
