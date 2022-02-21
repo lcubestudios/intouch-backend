@@ -14,17 +14,18 @@ require('./config.php');
 //       $token = $matches[1];
 //    }
 // }
+$users_table = 'public.users';
+$contacts_table = 'public.contacts';
+$messages_table = 'public.messages';
 
 switch ($method):
    case 'GET':
-      $users_table = 'public.users';
-      $messages_table = 'public.messages';
 
       //Load Contact information
-      $raw=file_get_contents('php://input');
-      $data=json_decode($raw,true);
-      $token = $data['token'];
-      $phone_number = $data['phone_number'];
+			$headers = getallheaders();
+			$token = preg_split('/\s/', $headers['Authorization'])[1];
+
+      $phone_number = $_GET['phone_number'];
 
        //Get own ID with Token 
       $load_id = "SELECT u_id FROM " . $users_table ." WHERE token = '".$token."';";
@@ -67,14 +68,13 @@ switch ($method):
 	pg_close($conn);
    break;
    case 'POST':
-      $users_table = 'public.users';
-      $contacts_table = 'public.contacts';
-      $messages_table = 'public.messages';
       
       //Load Contact information
+			$headers = getallheaders();
+			$token = preg_split('/\s/', $headers['Authorization'])[1];
+
       $raw=file_get_contents('php://input');
       $data=json_decode($raw,true);
-      $token = $data['token'];
       $phone_number = $data['phone_number'];
       $body_text = $data['body_text'];
 
@@ -106,14 +106,12 @@ switch ($method):
    break;
 
    case 'DELETE':
-      $users_table = 'public.users';
-      $contacts_table = 'public.contacts';
-      $messages_table = 'public.messages';
-      
       //Load Contact information
+			$headers = getallheaders();
+			$token = preg_split('/\s/', $headers['Authorization'])[1];
+			
       $raw=file_get_contents('php://input');
       $data=json_decode($raw,true);
-      $token = $data['token'];
       $phone_number = $data['phone_number'];
 
       //Load User id 

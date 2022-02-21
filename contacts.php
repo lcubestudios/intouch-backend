@@ -15,6 +15,7 @@ switch ($method):
     // Load Token
 		$headers = getallheaders();
 		$token = preg_split('/\s/', $headers['Authorization'])[1];
+		
     $query = "SELECT u_id FROM " . $users_table. " WHERE token = '". $token. "'";
     $result = pg_query($conn, $query);
 
