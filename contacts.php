@@ -9,6 +9,7 @@ switch ($method):
     $output =  array();
     $users_table = 'public.users';
     $contacts_table = 'public.contacts';
+    $messages_table= 'public.messages'
 
     // Load Token
     $raw=file_get_contents('php://input');
@@ -31,7 +32,7 @@ switch ($method):
             $query3 = "SELECT phone_number, first_name, last_name FROM " . $users_table. " WHERE u_id = '". $c_uid. "'";
             $result3 = pg_query($conn, $query3);
             while($r3 = pg_fetch_row($result3)) {
-                $query4 = "SELECT COUNT(*) FROM " . $users_table ." WHERE (r_read = FALSE AND r_id = '". $u_id."' AND s_id = '". $c_uid."');";
+                $query4 = "SELECT COUNT(*) FROM " . $messages_table ." WHERE (r_read = FALSE AND r_id = '". $u_id."' AND s_id = '". $c_uid."');";
                 echo($query4);
                 $result4 = pg_query($conn, $query4);
                 $row4 = pg_fetch_row($result4);
