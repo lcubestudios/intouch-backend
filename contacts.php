@@ -4,17 +4,17 @@ error_reporting(E_ALL);
 ini_set('display_errors', 'On');
 require('./config.php');
 
+$users_table = 'public.users';
+$contacts_table = 'public.contacts';
+$messages_table= 'public.messages';
+
 switch ($method):
     case 'GET':
     $output =  array();
-    $users_table = 'public.users';
-    $contacts_table = 'public.contacts';
-    $messages_table= 'public.messages';
 
     // Load Token
-    $raw=file_get_contents('php://input');
-    $data=json_decode($raw,true);
-    $token = $data['token'];
+		$headers = getallheaders();
+		$token = preg_split('/\s/', $headers['Authorization'])[1];
     $query = "SELECT u_id FROM " . $users_table. " WHERE token = '". $token. "'";
     $result = pg_query($conn, $query);
 
@@ -65,13 +65,12 @@ switch ($method):
     break;
 
     case 'POST':
-        $users_table = 'public.users';
-        $contacts_table = 'public.contacts';
-        
         //Load Contact information
+				$headers = getallheaders();
+				$token = preg_split('/\s/', $headers['Authorization'])[1];
+				
         $raw=file_get_contents('php://input');
         $data=json_decode($raw,true);
-        $token = $data['token'];
         $phone_number = $data['phone_number'];
 
         //Load User id 
@@ -113,12 +112,11 @@ switch ($method):
         pg_close($conn);
     break;
     case 'DELETE':
-        $users_table = 'public.users';
-        $contacts_table = 'public.contacts';
-    
+				$headers = getallheaders();
+				$token = preg_split('/\s/', $headers['Authorization'])[1];
+
         $raw=file_get_contents('php://input');
         $data=json_decode($raw,true);
-        $token = $data['token'];
         $phone_number = $data['phone_number'];
     
         $query = "SELECT u_id FROM " . $users_table ." WHERE token = '".$token."';";

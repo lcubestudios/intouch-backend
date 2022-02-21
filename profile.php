@@ -6,13 +6,13 @@ $table = 'public.users';
 
 if ($method === "POST") {
 	$headers = getallheaders();
+	$token = preg_split('/\s/', $headers['Authorization'])[1];
+	
 	$raw = file_get_contents('php://input');
 	$data = json_decode($raw, true);
 
 	$first_name = $data['first_name'];
 	$last_name = $data['last_name'];
-
-	$token = preg_split('/\s/', $headers['Authorization'])[1];
 
 	$query = "UPDATE " . $table . "
 		SET first_name = '" . $first_name . "', last_name = '" . $last_name . "' 
