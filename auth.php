@@ -1,9 +1,6 @@
 <?php
 require('./config.php');
 
-header("Access-Control-Allow-Origin: *");
-header("Access-Control-Allow-Headers: *");
-
 $output = array();
 $table = 'public.users';
 
