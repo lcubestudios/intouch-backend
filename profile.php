@@ -4,7 +4,7 @@ require('./config.php');
 $output = array();
 $table = 'public.users';
 
-if ($method === "POST") {
+if ($method === "PUT") {
 	$headers = getallheaders();
 	$token = preg_split('/\s/', $headers['Authorization'])[1];
 	
