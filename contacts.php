@@ -9,7 +9,7 @@ switch ($method):
     $output =  array();
     $users_table = 'public.users';
     $contacts_table = 'public.contacts';
-    $messages_table= 'public.messages'
+    $messages_table= 'public.messages';
 
     // Load Token
     $raw=file_get_contents('php://input');
