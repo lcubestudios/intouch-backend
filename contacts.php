@@ -40,7 +40,7 @@ switch ($method):
                     "phone_number" => $r3[0],
                     "first_name" => $r3[1],
                     "last_name" => $r3[2],
-                    "u_id" => $u_id,
+                    "u_id" => $c_uid,
                     "unread" => $row4[0]
                 ));
             }
@@ -74,43 +74,60 @@ switch ($method):
         $data=json_decode($raw,true);
         $phone_number = $data['phone_number'];
 
-        //Load User id 
-        $query = "SELECT u_id FROM " . $users_table ." WHERE token = '".$token."'";
-        $result = pg_query($conn, $query);
-    
-        if($row = pg_fetch_row($result)) {
-            $u_id  = $row[0];
-        }
+        if($phone_number){
+             //Load User id 
+            $query = "SELECT u_id FROM " . $users_table ." WHERE token = '".$token."'";
+            $result = pg_query($conn, $query);
+        
+            if($row = pg_fetch_row($result)) {
+                $u_id  = $row[0];
+            }
 
-        //Load Reciever user id
-        $query2 = "SELECT u_id FROM " . $users_table ." WHERE phone_number = '".$phone_number."'";
-        $result2 = pg_query($conn, $query2);
-        if($r = pg_fetch_row($result2)) {
-            $r_uid = $r[0];
-        }
+            //Load Reciever user id
+            $query2 = "SELECT u_id FROM " . $users_table ." WHERE phone_number = '".$phone_number."'";
+            $result2 = pg_query($conn, $query2);
+            if($r = pg_fetch_row($result2)) {
+                $r_uid = $r[0];
+            }
 
-        //Check if Relationship exists
-        $query3 = "SELECT u_id, c_uid FROM " . $contacts_table ." WHERE u_id = '".$u_id."' AND c_uid = '".$r_uid."'" ;
-        $result3 = pg_query($conn, $query3);
-        if(pg_fetch_row($result3)){
+            if($r_uid){
+                //Check if Relationship exists
+                $query3 = "SELECT u_id, c_uid FROM " . $contacts_table ." WHERE u_id = '".$u_id."' AND c_uid = '".$r_uid."'" ;
+                $result3 = pg_query($conn, $query3);
+                if(pg_fetch_row($result3)){
+                    $output = array(
+                        'status_code' => 301,
+                        'message' => "Contact exist"
+                    );
+                }
+                // Create Relationship
+                else{
+                    $query4 = "INSERT INTO " . $contacts_table . " (u_id, c_uid) VALUES ('". $u_id."', '".$r_uid."')";
+                    $query5 = "INSERT INTO " . $contacts_table . " (c_uid, u_id) VALUES ('". $u_id."', '".$r_uid."')";
+                    pg_query($conn, $query4);
+                    pg_query($conn, $query5);
+                    $output = array(
+                        'status_code' => 200,
+                        'message' => "Contact added"
+                    );
+                }
+            }else{
+                $output = array(
+                    'status_code' => 301,
+                    'message' => "User not found"
+                );
+            }      
+            echo json_encode($output);
+            pg_close($conn);
+        }
+        else{
             $output = array(
                 'status_code' => 301,
-                'message' => "Contact exist"
-             );
+                'message' => "Invalid input"
+            );
+            echo json_encode($output);
         }
-        // Create Relationship
-        else{
-            $query4 = "INSERT INTO " . $contacts_table . " (u_id, c_uid) VALUES ('". $u_id."', '".$r_uid."')";
-            $query5 = "INSERT INTO " . $contacts_table . " (c_uid, u_id) VALUES ('". $u_id."', '".$r_uid."')";
-            pg_query($conn, $query4);
-            pg_query($conn, $query5);
-            $output = array(
-                'status_code' => 200,
-                'message' => "Contact added"
-             );
-        }
-        echo json_encode($output);
-        pg_close($conn);
+       
     break;
     case 'DELETE':
         $headers = getallheaders();

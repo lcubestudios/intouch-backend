@@ -30,7 +30,7 @@ if ($method === "POST"){
 					$output = array(
 						'status_code' => 200,
 						'message' => 'Login sucessful!',
-						'profile' => $row
+						'results' => $row
 					);
 			}
 		}
@@ -73,7 +73,7 @@ if ($method === "POST"){
 			$output = array(
 				'status_code' => 200,
 				'message' => 'User has been created',
-				'profile' => array(
+				'results' => array(
 					'token' => $token, 
 					'first_name' => $first_name,
 					'last_name' => $last_name,
