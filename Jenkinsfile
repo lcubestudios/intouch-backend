@@ -22,18 +22,18 @@ pipeline{
                 slackSend color: "good", message: "Success building the application."
             }
         }
-        stage("scan") {
-            steps {
-                echo 'Scanning code for vulnerabilities.'
-                slackSend color: "warning", message: "Scanning code for vulnerabilities on ${REPO_NAME}/${BRANCH_NAME}..."
-                snykSecurity(
-                    snykInstallation: 'snyk-latest',
-                    snykTokenId: "${SNYK_ID}",
-                    failOnIssues: "false",
-                )
-                slackSend color: "good", message: "Success scanning the code."
-            }
-        }
+        // stage("scan") {
+        //     steps {
+        //         echo 'Scanning code for vulnerabilities.'
+        //         slackSend color: "warning", message: "Scanning code for vulnerabilities on ${REPO_NAME}/${BRANCH_NAME}..."
+        //         snykSecurity(
+        //             snykInstallation: 'snyk-latest',
+        //             snykTokenId: "${SNYK_ID}",
+        //             failOnIssues: "false",
+        //         )
+        //         slackSend color: "good", message: "Success scanning the code."
+        //     }
+        // }
     }
     post {
         success {
