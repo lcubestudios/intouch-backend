@@ -67,9 +67,9 @@ switch ($method):
 
     case 'POST':
         //Load Contact information
-				$headers = getallheaders();
-				$token = preg_split('/\s/', $headers['Authorization'])[1];
-				
+        $headers = getallheaders();
+        $token = preg_split('/\s/', $headers['Authorization'])[1];
+        
         $raw=file_get_contents('php://input');
         $data=json_decode($raw,true);
         $phone_number = $data['phone_number'];
@@ -113,8 +113,8 @@ switch ($method):
         pg_close($conn);
     break;
     case 'DELETE':
-				$headers = getallheaders();
-				$token = preg_split('/\s/', $headers['Authorization'])[1];
+        $headers = getallheaders();
+        $token = preg_split('/\s/', $headers['Authorization'])[1];
 
         $raw=file_get_contents('php://input');
         $data=json_decode($raw,true);
@@ -133,8 +133,10 @@ switch ($method):
             $c_uid  = $row[0];
         }
 
-        $delete_relationship="DELETE FROM " . $contacts_table ." WHERE (u_id = '".$u_id."' AND c_uid = '".$c_uid."');";
+        $delete_relationship= "DELETE FROM " . $contacts_table ." WHERE (u_id = '".$u_id."' AND c_uid = '".$c_uid."');";
+        $delete_relationship_reciever= "DELETE FROM " . $contacts_table ." WHERE (u_id = '".$c_uid."' AND c_uid = '".$u_id."');";
         $result = pg_query($conn, $delete_relationship);
+        $result2 = pg_query($conn, $delete_relationship_reciever);
          
         //Output Contacts
         $output = array(
