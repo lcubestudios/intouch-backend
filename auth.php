@@ -12,24 +12,29 @@ if ($method === "POST"){
 		$raw = file_get_contents('php://input');
 		$data = json_decode($raw, true);
 
-    $phone_number = $data['phone_number'];
-    $password = $data['password'];
+		$phone_number = $data['phone_number'];
+		$password = $data['password'];
 
-		$query = "SELECT token, first_name, last_name, phone_number 
-			FROM " . $table . "
-			WHERE phone_number = '" . $phone_number . "'
-			AND password = '" . $password . "'";
+		$verify_pass_query = "SELECT password FROM " . $table . " WHERE phone_number = '" . $phone_number . "'";
+		$result = pg_query($conn, $verify_pass_query);
+		$hashed_pass = pg_fetch_row($result);
+		$password_verify = password_verify($password, $hashed_pass[0]);
+
+		if($password_verify == true){
+			$query = "SELECT token, first_name, last_name, phone_number FROM " . $table . " WHERE phone_number = '" . $phone_number . "' ";
 		
-    $result = pg_query($conn, $query);
+    		$result = pg_query($conn, $query);
 
-		// Login Successful
-    if ($row = pg_fetch_assoc($result)) {
-			$output = array(
-				'status_code' => 200,
-				'message' => 'Login sucessful!',
-				'profile' => $row
-			);
-    }
+			// Login Successful
+			if ($row = pg_fetch_assoc($result)) {
+					$output = array(
+						'status_code' => 200,
+						'message' => 'Login sucessful!',
+						'profile' => $row
+					);
+			}
+		}
+		
 		// Login Failed
 		else {
 			$output = array(
@@ -43,15 +48,16 @@ if ($method === "POST"){
 		$raw = file_get_contents('php://input');
 		$data = json_decode($raw, true);
 
-    $first_name = $data['first_name'];
-    $last_name = $data['last_name'];
-    $phone_number = $data['phone_number'];
-    $password = $data['password'];
+		$first_name = $data['first_name'];
+		$last_name = $data['last_name'];
+		$phone_number = $data['phone_number'];
+		$password = $data['password'];
+		$hash = password_hash($password, PASSWORD_DEFAULT);
 
 		$token = bin2hex(openssl_random_pseudo_bytes(20));
 
 		$query = "INSERT INTO " . $table . " (first_name, last_name, phone_number, password, token)
-			VALUES ('". $first_name ."', '". $last_name ."', '". $phone_number ."', '". $password ."', '". $token ."')";
+			VALUES ('". $first_name ."', '". $last_name ."', '". $phone_number ."', '". $hash ."', '". $token ."')";
 
 		pg_send_query($conn, $query);
 		$result = pg_get_result($conn);
