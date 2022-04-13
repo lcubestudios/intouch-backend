@@ -84,6 +84,7 @@ switch ($method):
             }
 
             //Load Reciever user id
+            $r_uid = null;
             $query2 = "SELECT u_id FROM " . $users_table ." WHERE phone_number = '".$phone_number."'";
             $result2 = pg_query($conn, $query2);
             if($r = pg_fetch_row($result2)) {
