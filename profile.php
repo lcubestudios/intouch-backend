@@ -2,7 +2,7 @@
 require('./config.php');
 
 $output = array();
-$table = 'public.users';
+$table = 'public.messaging_app_user';
 
 if ($method === "PUT") {
 	$headers = getallheaders();

@@ -23,7 +23,7 @@ $db = $_ENV['DB_NAME'];
 $port = $_ENV['DB_PORT'];
 
 // Create connection
-$conn = pg_connect("host=$host port=5432 dbname=$db user=$db_user password=$db_pass");
+$conn = pg_connect("host=$host port=$port dbname=$db user=$db_user password=$db_pass");
 
 $method = $_SERVER['REQUEST_METHOD'];
 ?>
