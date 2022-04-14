@@ -15,6 +15,7 @@ if ($method === "PUT") {
 	$last_name = $data['last_name'];
 	$old_password = $data['old_password'];
 	$new_password = $data['new_password'];
+	$hash = password_hash($new_password, PASSWORD_DEFAULT);
 
 	if($old_password){
 		$verify_pass_query = "SELECT password FROM " . $table . " WHERE token = '" . $token . "' ";
@@ -23,7 +24,7 @@ if ($method === "PUT") {
 		$password_verify = password_verify($old_password, $hashed_pass[0]);
 		
 		if($password_verify){
-			$query = "UPDATE " . $table . " SET first_name = '" . $first_name . "', last_name = '" . $last_name . "', password = '" . $new_password . "' 
+			$query = "UPDATE " . $table . " SET first_name = '" . $first_name . "', last_name = '" . $last_name . "', password = '" . $hash . "' 
 			WHERE token = '" . $token . "' RETURNING first_name, last_name, phone_number, token";
 	
 			$result = pg_query($conn, $query);

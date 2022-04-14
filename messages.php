@@ -40,7 +40,7 @@ switch ($method):
          $r_uid = $r[0];
       }
       //Update READ field
-      $update_read_field = "UPDATE " . $messages_table ." SET reciever_read = TRUE WHERE (sender_id = '".$r_uid."' AND r_id = '".$u_id."');";
+      $update_read_field = "UPDATE " . $messages_table ." SET reciever_read = TRUE WHERE (sender_id = '".$r_uid."' AND reciever_id = '".$u_id."');";
       pg_query($conn, $update_read_field);
 
       //get all messages
