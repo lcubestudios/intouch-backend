@@ -16,7 +16,7 @@ $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
 $dotenv->load();
 
 // Retrive env variable
-$host = $_ENV['HOST'];
+$host = $_ENV['DB_HOST'];
 $db_user = $_ENV['DB_USER'];
 $db_pass = $_ENV['DB_PASSWORD'];
 $db = $_ENV['DB_NAME'];

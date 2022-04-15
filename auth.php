@@ -18,30 +18,39 @@ if ($method === "POST"){
 		$verify_pass_query = "SELECT password FROM " . $table . " WHERE phone_number = '" . $phone_number . "'";
 		$result = pg_query($conn, $verify_pass_query);
 		$hashed_pass = pg_fetch_row($result);
-		$password_verify = password_verify($password, $hashed_pass[0]);
-
-		if($password_verify == true){
-			$query = "SELECT token, first_name, last_name, phone_number FROM " . $table . " WHERE phone_number = '" . $phone_number . "' ";
 		
-    		$result = pg_query($conn, $query);
+		if($hashed_pass){
+			$password_verify = password_verify($password, $hashed_pass[0]);
 
-			// Login Successful
-			if ($row = pg_fetch_assoc($result)) {
-					$output = array(
-						'status_code' => 200,
-						'message' => 'Login sucessful!',
-						'results' => $row
-					);
+			if($password_verify == true){
+				$query = "SELECT token, first_name, last_name, phone_number FROM " . $table . " WHERE phone_number = '" . $phone_number . "' ";
+			
+				$result = pg_query($conn, $query);
+	
+				// Login Successful
+				if ($row = pg_fetch_assoc($result)) {
+						$output = array(
+							'status_code' => 200,
+							'message' => 'Login sucessful!',
+							'results' => $row
+						);
+				}
+			}
+			// Login Failed
+			else {
+				$output = array(
+					'status_code' => 301,
+					'message' => 'Wrong username or password. Please try again.',
+				);
 			}
 		}
-		
-		// Login Failed
-		else {
+		else{
 			$output = array(
 				'status_code' => 301,
-				'message' => 'Wrong username or password. Please try again.',
+				'message' => 'User does not exist',
 			);
 		}
+		
 	}
 	// REGISTER
 	else if ($purpose === 'reg') {

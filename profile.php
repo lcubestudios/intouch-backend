@@ -10,7 +10,11 @@ if ($method === "PUT") {
 	
 	$raw = file_get_contents('php://input');
 	$data = json_decode($raw, true);
+	// $purpose = $data['purpose'];
 
+	// if ($purpose === 'basic'){
+
+	// }
 	$first_name = $data['first_name'];
 	$last_name = $data['last_name'];
 	$old_password = $data['old_password'];
