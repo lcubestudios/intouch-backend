@@ -96,19 +96,24 @@ psql -U postgres demo < messaging_app_schema.pgsql
 
 ## How to use the solution
 
-#### Auth - login
-> POST
+#### Auth
+> Login
 
 ##### Endpoint: 
-`{{server}}/{{repo_name}}/auth.php?purpose=login`
+`{{server}}/{{reponame}}/auth.php?purpose=login`
 
-##### Query Parameters (body, JSON): 
-- phone_number : number
-- password : securepassword
+##### Query Parameters: 
+- Body JSON
 
+```json
+{
+    "phone_number": 1234567890,
+    "password": "Helloworld!"
+}
+```
 ##### Example:
 
-**POST**/localhost/messagingapp-api/auth.php?purporse=login
+**POST** http://serverip/messagingapp-api/auth.php?purporse=login
 **response**
 
 ```json
@@ -124,21 +129,27 @@ psql -U postgres demo < messaging_app_schema.pgsql
 }
 ```
 
-#### Auth - register
-> POST
+#### Auth 
+> Register
 
 ##### Endpoint: 
-`{{server}}/{{repo_name}}/auth.php?purpose=reg`
+`{{server}}/{{reponame}}/auth.php?purpose=reg`
 
-##### Query Parameters (body, JSON): 
-- first_name: firstname
-- last_name: lastname
-- phone_number : number
-- password : securepassword
+##### Query Parameters: 
+- Body JSON
+
+```json
+{
+    "first_name": "John",
+    "last_name": "Doe",
+    "phone_number": 1234567890,
+    "password": "Helloworld!"
+}
+```
 
 ##### Example:
 
-**POST**/localhost/messagingapp-api/auth.php?purporse=reg
+**POST** http://serverip/messagingapp-api/auth.php?purporse=reg
 **response**
 
 ```json
@@ -151,6 +162,213 @@ psql -U postgres demo < messaging_app_schema.pgsql
         "last_name": "Your last name",
         "phone_number": 1234567890
     }
+}
+```
+
+#### Contact
+>Load Contacts
+
+##### Endpoint: 
+`{{server}}/{{reponame}}/contacts.php`
+
+##### Query Parameters: 
+- Authorization Bearer Token - `Token: <token>`
+
+##### Example:
+
+**GET** http://serverip/messagingapp-api/contacts.php
+**response**
+
+```json
+{
+    "status_code": 200,
+    "contacts": [
+        {
+            "phone_number": "1234567890",
+            "first_name": "John",
+            "last_name": "Doe",
+            "u_id": "2",
+            "unread": "0"
+        }
+    ]
+}
+```
+
+#### Contact 
+> Add Contact
+
+##### Endpoint: 
+`{{server}}/{{reponame}}/contacts.php`
+
+##### Query Parameters: 
+- Authorization Bearer Token - `Token: <token>`
+- Body JSON
+```json
+{
+    "phone_number": 1234567890
+}
+```
+##### Example:
+
+**POST** http://serverip/messagingapp-api/contacts.php
+**response**
+
+```json
+{
+    "status_code": 200,
+    "message": "Contact added"
+}
+```
+
+#### Contact 
+> Delete Contact
+
+##### Endpoint: 
+`{{server}}/{{reponame}}/contacts.php`
+
+##### Query Parameters: 
+- Authorization Bearer Token - `Token: <token>`
+- Body JSON
+```json
+{
+    "phone_number": 1234567890
+}
+```
+##### Example:
+
+**DELETE** http://serverip/messagingapp-api/contacts.php
+**response**
+
+```json
+{
+    "status_code": 200,
+    "message": "Contact has been deleted!"
+}
+
+```
+#### Profile 
+> Update Profile
+
+##### Endpoint: 
+`{{server}}/{{reponame}}/profile.php`
+
+##### Query Parameters: 
+- Authorization Bearer Token - `Token: <token>`
+- Body JSON
+```json
+{
+    "first_name": "John",
+    "last_name": "Doe",
+    "old_password": "Helloworld!",
+    "new_password": "Helloworld!%"
+}
+```
+##### Example:
+
+**PUT** http://serverip/messagingapp-api/profile.php
+**response**
+
+```json
+{
+    "status_code": 200,
+    "message": "Profile updated!",
+    "profile": {
+        "first_name": "John",
+        "last_name": "Doe",
+        "phone_number": "1234567890",
+        "token": "Your token"
+    }
+}
+```
+#### Messages
+> Load Messages
+
+##### Endpoint: 
+`{{server}}/{{reponame}}/messages.php`
+
+##### Query Parameters: 
+- Authorization Bearer Token - `Token: <token>`
+- Query Params - `?phone_number=1234567890`
+
+
+##### Example:
+**GET** http://serverip/messagingapp-api/messages.php?phone_number=1234567890
+**response**
+
+```json
+{
+    "status_code": 200,
+    "messages": [
+        {
+            "sender_id": "1",
+            "receiver_id": "2",
+            "body_text": "Hello John, How your doing",
+            "messages_read": "f",
+            "date_message": "2022-04-18 00:31:11.757233+00",
+            "message_id": "1",
+            "is_sender": true
+        },
+        {
+            "sender_id": "2",
+            "receiver_id": "1",
+            "body_text": "Hello Doe, How your doing",
+            "messages_read": "t",
+            "date_message": "2022-04-18 00:31:57.460954+00",
+            "message_id": "2",
+            "is_sender": false
+        }
+    ]
+}
+```
+#### Messages
+> Send Message
+
+##### Endpoint: 
+`{{server}}/{{reponame}}/messages.php`
+
+##### Query Parameters: 
+- Authorization Bearer Token - `Token: <token>`
+- Body JSON
+```json
+{
+    "phone_number": 1234567890,
+    "body_text": "Hello John, How your doing?"
+}
+```
+##### Example:
+
+**POST** http://serverip/messagingapp-api/messages.php?phone_number=1234567890
+**response**
+
+```json
+{
+    "status_code": 200,
+    "message": "message sent"
+}
+```
+#### Messages
+> Delete Messages
+
+##### Endpoint: 
+`{{server}}/{{reponame}}/messages.php`
+
+##### Query Parameters: 
+- Authorization Bearer Token - `Token: <token>`
+- Body JSON
+```json
+{
+    "phone_number": 1234567890
+}
+```
+##### Example:
+
+**DELETE** http://serverip/messagingapp-api/messages.php
+**response**
+
+```json
+{
+    "status_code": 200,
+    "message": "All messages deleted"
 }
 ```
 ---
