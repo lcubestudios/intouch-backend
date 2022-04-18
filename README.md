@@ -114,6 +114,7 @@ psql -U postgres demo < messaging_app_schema.pgsql
 ##### Example:
 
 **POST** http://serverip/messagingapp-api/auth.php?purporse=login
+
 **response**
 
 ```json
@@ -150,6 +151,7 @@ psql -U postgres demo < messaging_app_schema.pgsql
 ##### Example:
 
 **POST** http://serverip/messagingapp-api/auth.php?purporse=reg
+
 **response**
 
 ```json
@@ -177,6 +179,7 @@ psql -U postgres demo < messaging_app_schema.pgsql
 ##### Example:
 
 **GET** http://serverip/messagingapp-api/contacts.php
+
 **response**
 
 ```json
@@ -211,6 +214,7 @@ psql -U postgres demo < messaging_app_schema.pgsql
 ##### Example:
 
 **POST** http://serverip/messagingapp-api/contacts.php
+
 **response**
 
 ```json
@@ -237,6 +241,7 @@ psql -U postgres demo < messaging_app_schema.pgsql
 ##### Example:
 
 **DELETE** http://serverip/messagingapp-api/contacts.php
+
 **response**
 
 ```json
@@ -266,6 +271,7 @@ psql -U postgres demo < messaging_app_schema.pgsql
 ##### Example:
 
 **PUT** http://serverip/messagingapp-api/profile.php
+
 **response**
 
 ```json
@@ -293,6 +299,7 @@ psql -U postgres demo < messaging_app_schema.pgsql
 
 ##### Example:
 **GET** http://serverip/messagingapp-api/messages.php?phone_number=1234567890
+
 **response**
 
 ```json
@@ -338,6 +345,7 @@ psql -U postgres demo < messaging_app_schema.pgsql
 ##### Example:
 
 **POST** http://serverip/messagingapp-api/messages.php?phone_number=1234567890
+
 **response**
 
 ```json
@@ -363,6 +371,7 @@ psql -U postgres demo < messaging_app_schema.pgsql
 ##### Example:
 
 **DELETE** http://serverip/messagingapp-api/messages.php
+
 **response**
 
 ```json
