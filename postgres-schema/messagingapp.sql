@@ -16,22 +16,6 @@ SET xmloption = content;
 SET client_min_messages = warning;
 SET row_security = off;
 
---
--- Name: public; Type: SCHEMA; Schema: -; Owner: postgres
---
-
-CREATE SCHEMA public;
-
-
-ALTER SCHEMA public OWNER TO postgres;
-
---
--- Name: SCHEMA public; Type: COMMENT; Schema: -; Owner: postgres
---
-
-COMMENT ON SCHEMA public IS 'standard public schema';
-
-
 SET default_tablespace = '';
 
 SET default_table_access_method = heap;
@@ -151,44 +135,51 @@ ALTER TABLE ONLY public.messaging_app_user
 -- Name: SCHEMA public; Type: ACL; Schema: -; Owner: postgres
 --
 
-GRANT ALL ON SCHEMA public TO api_user;
+GRANT ALL ON SCHEMA public TO website;
+
+
+--
+-- Name: TABLE decentralized_storage_credential; Type: ACL; Schema: public; Owner: postgres
+--
+
+GRANT ALL ON TABLE public.decentralized_storage_credential TO website;
+
 
 --
 -- Name: TABLE messaging_app_contacts; Type: ACL; Schema: public; Owner: postgres
 --
 
-GRANT ALL ON TABLE public.messaging_app_contacts TO api_user;
+GRANT ALL ON TABLE public.messaging_app_contacts TO website;
 
 
 --
 -- Name: SEQUENCE messaging_app_messages_id_seq; Type: ACL; Schema: public; Owner: postgres
 --
 
-GRANT SELECT,USAGE ON SEQUENCE public.messaging_app_messages_id_seq TO api_user;
+GRANT SELECT,USAGE ON SEQUENCE public.messaging_app_messages_id_seq TO website;
 
 
 --
 -- Name: TABLE messaging_app_messages; Type: ACL; Schema: public; Owner: postgres
 --
 
-GRANT ALL ON TABLE public.messaging_app_messages TO api_user;
+GRANT ALL ON TABLE public.messaging_app_messages TO website;
 
 
 --
 -- Name: TABLE messaging_app_user; Type: ACL; Schema: public; Owner: postgres
 --
 
-GRANT ALL ON TABLE public.messaging_app_user TO api_user;
+GRANT ALL ON TABLE public.messaging_app_user TO website;
 
 
 --
 -- Name: SEQUENCE messaging_app_user_u_id_seq; Type: ACL; Schema: public; Owner: postgres
 --
 
-GRANT SELECT,USAGE ON SEQUENCE public.messaging_app_user_u_id_seq TO api_user;
+GRANT SELECT,USAGE ON SEQUENCE public.messaging_app_user_u_id_seq TO website;
 
 
 --
 -- PostgreSQL database dump complete
 --
-
