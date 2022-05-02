@@ -12,10 +12,10 @@ if ($method === "POST"){
 		$raw = file_get_contents('php://input');
 		$data = json_decode($raw, true);
 
-		$phone_number = $data['phone_number'];
+		$username = $data['username'];
 		$password = $data['password'];
 
-		$verify_pass_query = "SELECT password FROM " . $table . " WHERE phone_number = '" . $phone_number . "'";
+		$verify_pass_query = "SELECT password FROM " . $table . " WHERE username = '" . $username . "'";
 		$result = pg_query($conn, $verify_pass_query);
 		$hashed_pass = pg_fetch_row($result);
 		
@@ -23,7 +23,7 @@ if ($method === "POST"){
 			$password_verify = password_verify($password, $hashed_pass[0]);
 
 			if($password_verify == true){
-				$query = "SELECT token, first_name, last_name, phone_number FROM " . $table . " WHERE phone_number = '" . $phone_number . "' ";
+				$query = "SELECT token, first_name, last_name, username FROM " . $table . " WHERE username = '" . $username . "' ";
 			
 				$result = pg_query($conn, $query);
 	
@@ -59,14 +59,14 @@ if ($method === "POST"){
 
 		$first_name = $data['first_name'];
 		$last_name = $data['last_name'];
-		$phone_number = $data['phone_number'];
+		$username = $data['username'];
 		$password = $data['password'];
 		$hash = password_hash($password, PASSWORD_DEFAULT);
 
 		$token = bin2hex(openssl_random_pseudo_bytes(20));
 
-		$query = "INSERT INTO " . $table . " (first_name, last_name, phone_number, password, token)
-			VALUES ('". $first_name ."', '". $last_name ."', '". $phone_number ."', '". $hash ."', '". $token ."')";
+		$query = "INSERT INTO " . $table . " (first_name, last_name, username, password, token)
+			VALUES ('". $first_name ."', '". $last_name ."', '". $username ."', '". $hash ."', '". $token ."')";
 
 		pg_send_query($conn, $query);
 		$result = pg_get_result($conn);
@@ -86,7 +86,7 @@ if ($method === "POST"){
 					'token' => $token, 
 					'first_name' => $first_name,
 					'last_name' => $last_name,
-					'phone_number' => $phone_number
+					'username' => $username
 				)
 			);
 		}

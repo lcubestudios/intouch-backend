@@ -16,7 +16,7 @@ switch ($method):
       $headers = getallheaders();
       $token = preg_split('/\s/', $headers['Authorization'])[1];
 
-      $phone_number = $_GET['phone_number'];
+      $username = $_GET['username'];
 
        //Get own ID with Token 
       $load_id = "SELECT u_id FROM " . $users_table ." WHERE token = '".$token."';";
@@ -25,7 +25,7 @@ switch ($method):
          $u_id = $row[0];
       }
       //Load Reciever user id
-      $load_reciever_id = "SELECT u_id FROM " . $users_table ." WHERE phone_number = '".$phone_number."'";
+      $load_reciever_id = "SELECT u_id FROM " . $users_table ." WHERE username = '".$username."'";
       $result2 = pg_query($conn, $load_reciever_id);
       if($r = pg_fetch_row($result2)) {
          $r_uid = $r[0];
@@ -66,7 +66,7 @@ switch ($method):
 
       $raw=file_get_contents('php://input');
       $data=json_decode($raw,true);
-      $phone_number = $data['phone_number'];
+      $username = $data['username'];
       $body_text = $data['body_text'];
 
       //Load User id 
@@ -78,7 +78,7 @@ switch ($method):
       }
 
       //Load Reciever user id
-      $query2 = "SELECT u_id FROM " . $users_table ." WHERE phone_number = '".$phone_number."'";
+      $query2 = "SELECT u_id FROM " . $users_table ." WHERE username = '".$username."'";
       $result2 = pg_query($conn, $query2);
       if($r = pg_fetch_row($result2)) {
           $r_uid = $r[0];
@@ -103,7 +103,7 @@ switch ($method):
 			
       $raw=file_get_contents('php://input');
       $data=json_decode($raw,true);
-      $phone_number = $data['phone_number'];
+      $username = $data['username'];
 
       //Load User id 
       $query = "SELECT u_id FROM " . $users_table ." WHERE token = '".$token."'";
@@ -113,7 +113,7 @@ switch ($method):
       }
 
       //Load Reciever user id
-      $query2 = "SELECT u_id FROM " . $users_table ." WHERE phone_number = '".$phone_number."'";
+      $query2 = "SELECT u_id FROM " . $users_table ." WHERE username = '".$username."'";
       $result2 = pg_query($conn, $query2);
       if($r = pg_fetch_row($result2)) {
          $c_id  = "$r[0]\n";

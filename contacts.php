@@ -30,14 +30,14 @@ switch ($method):
         // Load Contacts information
         while ($r = pg_fetch_row($result2)) {
             $c_uid  = $r[0];
-            $query3 = "SELECT phone_number, first_name, last_name FROM " . $users_table. " WHERE u_id = '". $c_uid. "'";
+            $query3 = "SELECT username, first_name, last_name FROM " . $users_table. " WHERE u_id = '". $c_uid. "'";
             $result3 = pg_query($conn, $query3);
             while($r3 = pg_fetch_row($result3)) {
                 $query4 = "SELECT COUNT(*) FROM " . $messages_table ." WHERE (reciever_read = FALSE AND reciever_id = '". $u_id."' AND sender_id = '". $c_uid."');";
                 $result4 = pg_query($conn, $query4);
                 $row4 = pg_fetch_row($result4);
                 array_push($contact_array, array(
-                    "phone_number" => $r3[0],
+                    "username" => $r3[0],
                     "first_name" => $r3[1],
                     "last_name" => $r3[2],
                     "u_id" => $c_uid,
@@ -72,9 +72,9 @@ switch ($method):
         
         $raw=file_get_contents('php://input');
         $data=json_decode($raw,true);
-        $phone_number = $data['phone_number'];
+        $username = $data['username'];
 
-        if($phone_number){
+        if($username){
              //Load User id 
             $query = "SELECT u_id FROM " . $users_table ." WHERE token = '".$token."'";
             $result = pg_query($conn, $query);
@@ -85,7 +85,7 @@ switch ($method):
 
             //Load Reciever user id
             $r_uid = null;
-            $query2 = "SELECT u_id FROM " . $users_table ." WHERE phone_number = '".$phone_number."'";
+            $query2 = "SELECT u_id FROM " . $users_table ." WHERE username = '".$username."'";
             $result2 = pg_query($conn, $query2);
             if($r = pg_fetch_row($result2)) {
                 $r_uid = $r[0];
@@ -136,7 +136,7 @@ switch ($method):
 
         $raw=file_get_contents('php://input');
         $data=json_decode($raw,true);
-        $phone_number = $data['phone_number'];
+        $username = $data['username'];
     
         $query = "SELECT u_id FROM " . $users_table ." WHERE token = '".$token."';";
         $result = pg_query($conn, $query);
@@ -144,8 +144,8 @@ switch ($method):
         if($row = pg_fetch_row($result)) {
                 $u_id  = $row[0];
         }
-        //getting the c_id from phone_number
-        $query2 = "SELECT u_id FROM " . $users_table ." WHERE phone_number = '".$phone_number."';";
+        //getting the c_id from username
+        $query2 = "SELECT u_id FROM " . $users_table ." WHERE username = '".$username."';";
         $result2 = pg_query($conn, $query2);
         while ($row = pg_fetch_row($result2)) {
             $c_uid  = $row[0];

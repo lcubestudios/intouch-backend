@@ -29,7 +29,7 @@ if ($method === "PUT") {
 		
 		if($password_verify){
 			$query = "UPDATE " . $table . " SET first_name = '" . $first_name . "', last_name = '" . $last_name . "', password = '" . $hash . "' 
-			WHERE token = '" . $token . "' RETURNING first_name, last_name, phone_number, token";
+			WHERE token = '" . $token . "' RETURNING first_name, last_name, username, token";
 	
 			$result = pg_query($conn, $query);
 	

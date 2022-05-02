@@ -68,7 +68,7 @@ ALTER TABLE public.messaging_app_messages OWNER TO postgres;
 
 CREATE TABLE public.messaging_app_user (
     u_id integer NOT NULL,
-    phone_number numeric(10,0) NOT NULL,
+    username text NOT NULL,
     password text,
     token text,
     first_name text,
@@ -120,7 +120,7 @@ ALTER TABLE ONLY public.messaging_app_messages
 --
 
 ALTER TABLE ONLY public.messaging_app_user
-    ADD CONSTRAINT messaging_app_user_phone_number_key UNIQUE (phone_number);
+    ADD CONSTRAINT messaging_app_user_phone_number_key UNIQUE (username);
 
 
 --
