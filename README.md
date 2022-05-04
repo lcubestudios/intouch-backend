@@ -26,10 +26,8 @@ It is a white-label product that is flexible to color and logo customizations, o
 
 ## Technologies Used
 
-- Package management: [Yarn](https://yarnpkg.com/)
-- UI framework: [VueJS](https://vuejs.org/)
-- Styling: [Tailwlind CSS](https://tailwindcss.com/)
-- Formatting: [Prettier](https://prettier.io/) & [ESLint](https://eslint.org/)
+- Package management: [Composer](https://getcomposer.org/)
+- Programming language: [PHP 8.1](https://www.php.net/downloads.php)
 
 ## 🧰 Prerequisites
 
@@ -103,6 +101,12 @@ psql -U postgres demo < messaging_app_schema.pgsql
     DB_USER=“YOUR_DB_USERNAME”
     DB_PASSWORD=“YOUR_DB_PASSWORD”
     DB_PORT=YOUR_PORT
+    
+    ## Headers ##
+    # * is the default for all. Make sure you update the CORS for better API security
+    HEADER_ORIGIN="*" # ex. https://yourdomain.com
+    HEADER_METHODS='*' # ex. GET,POST,PUT,DELETE
+    HEADER_HEADERS='*' # ex. Content-Type
     ```
 #### Step 5: Test endpoints
 1. In **POSTMAN** Update `server` variable in the collection to your server address
