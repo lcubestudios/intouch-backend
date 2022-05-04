@@ -2,7 +2,7 @@
 
 [![LCubeStudios](https://badgen.now.sh/badge/Developed%20by/LCube%20Studios/?color=FFCB05)](https://lcubestudios.io)
 
-![Banner](/assets/banner.png?raw=true "Banner")
+![Banner](/demo_assets/banner.png?raw=true "Banner")
 
 Messaging App is a microframework for messaging and managing private communications between users. It is an open source project that is built with Github and Docker, making it accessible and easy to install on private servers. The application is self hosted, ensuring that in-house data is stored in a private database.
 
