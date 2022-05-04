@@ -1,28 +1,46 @@
-## 🎯 Goal
+# Messaging App
 
-Create a basic messaging API that enables code to send short messages through an SMS API platform.
+[![LCubeStudios](https://badgen.now.sh/badge/Developed%20by/LCube%20Studios/?color=FFCB05)](https://lcubestudios.io)
 
-## 📜 Main Use Case
+![Banner](/img/screenshots/banner.png?raw=true "Banner")
 
-Once you've set up a functional SMS API, it will help you:
--  Send and receive messages in different forms
--  Review the status of all your messages in real time
+Messaging App is a microframework for messaging and managing private communications between users. It is an open source project that is built with Github and Docker, making it accessible and easy to install on private servers. The application is self hosted, ensuring that in-house data is stored in a private database.
 
-## 🦄 Features
+It is a white-label product that is flexible to color and logo customizations, offering organizations the ability to design personalized aesthetics.
 
--   Simple, reliable messaging
--   End-to-end message encryption
+## Important Links
+
+🕹️ [Demo](https://demo.lcubestudios.io/messagingapp-frontend)
+
+📝 [Case Study](https://lcubestudios.io/work/messaging-app)
+
+📒 [Documentation](/README.md)
+
+## Source Code
+
+⚙️ [Frontend Repository](https://github.com/lcubestudios/messagingapp-frontend)
+
+🗄 ️[Backend Repository](https://github.com/lcubestudios/messagingapp-api)
+
+🐳 [Docker Repository](https://github.com/lcubestudios/messagingapp-docker)
+
+## Technologies Used
+
+- Package management: [Yarn](https://yarnpkg.com/)
+- UI framework: [VueJS](https://vuejs.org/)
+- Styling: [Tailwlind CSS](https://tailwindcss.com/)
+- Formatting: [Prettier](https://prettier.io/) & [ESLint](https://eslint.org/)
 
 ## 🧰 Prerequisites
 
 #### Source Code
-- Clone [repository](https://github.com/lcubestudios/messagingapp-api) (run the following command inside the terminal)
+Clone [repository](https://github.com/lcubestudios/messagingapp-api) (run the following command inside the terminal)
 
-    ```sh
-    git clone https://github.com/lcubestudios/messagingapp-api
-    cd messagingapp-api
-    ```
-    > Keep this terminal active, this is where you will be required to run the commands stated below
+  ```sh
+  git clone https://github.com/lcubestudios/messagingapp-api
+  cd messagingapp-api
+  ```
+  > Keep this terminal active, this is where you will be required to run the commands stated below
 
 #### Postman
 
@@ -96,26 +114,21 @@ psql -U postgres demo < messaging_app_schema.pgsql
 
 ## How to use the solution
 
-#### Auth
-> Login
+### User Login
 
-##### Endpoint: 
-`{{server}}/{{reponame}}/auth.php?purpose=login`
+**Endpoint:**
+**POST/** `{{server}}/{{reponame}}/auth.php?purpose=login`
 
-##### Query Parameters: 
-- Body JSON
+**Body:**
 
 ```json
 {
-    "phone_number": 1234567890,
+    "username": "john_doe",
     "password": "Helloworld!"
 }
 ```
-##### Example:
 
-**POST** http://serverip/messagingapp-api/auth.php?purporse=login
-
-**response**
+**Response:**
 
 ```json
 {
@@ -130,29 +143,23 @@ psql -U postgres demo < messaging_app_schema.pgsql
 }
 ```
 
-#### Auth 
-> Register
+### User Registration
 
-##### Endpoint: 
-`{{server}}/{{reponame}}/auth.php?purpose=reg`
+**Endpoint:**
+**POST/** `{{server}}/{{reponame}}/auth.php?purpose=reg`
 
-##### Query Parameters: 
-- Body JSON
+**Body:**
 
 ```json
 {
     "first_name": "John",
     "last_name": "Doe",
-    "phone_number": 1234567890,
+    "username": "john_doe",
     "password": "Helloworld!"
 }
 ```
 
-##### Example:
-
-**POST** http://serverip/messagingapp-api/auth.php?purporse=reg
-
-**response**
+**Response:**
 
 ```json
 {
@@ -167,20 +174,20 @@ psql -U postgres demo < messaging_app_schema.pgsql
 }
 ```
 
-#### Contact
->Load Contacts
+#### Load Contacts
 
-##### Endpoint: 
-`{{server}}/{{reponame}}/contacts.php`
+**Endpoint:**
+**GET/** `{{server}}/{{reponame}}/contacts.php`
 
-##### Query Parameters: 
-- Authorization Bearer Token - `Token: <token>`
+**Headers:**
 
-##### Example:
+```json
+{
+  "Authorization Bearer Token": "Token: <token>"
+}
+```
 
-**GET** http://serverip/messagingapp-api/contacts.php
-
-**response**
+**Response:**
 
 ```json
 {
@@ -197,25 +204,28 @@ psql -U postgres demo < messaging_app_schema.pgsql
 }
 ```
 
-#### Contact 
-> Add Contact
+#### Add New Contact 
 
-##### Endpoint: 
-`{{server}}/{{reponame}}/contacts.php`
+**Endpoint:**
+**POST/** `{{server}}/{{reponame}}/contacts.php`
 
-##### Query Parameters: 
-- Authorization Bearer Token - `Token: <token>`
-- Body JSON
+**Headers:**
+
 ```json
 {
-    "phone_number": 1234567890
+  "Authorization Bearer Token": "Token: <token>"
 }
 ```
-##### Example:
 
-**POST** http://serverip/messagingapp-api/contacts.php
+**Body:**
 
-**response**
+```json
+{
+    "username": "john_doe"
+}
+```
+
+**Response:**
 
 ```json
 {
@@ -224,25 +234,28 @@ psql -U postgres demo < messaging_app_schema.pgsql
 }
 ```
 
-#### Contact 
-> Delete Contact
+#### Delete contact 
 
-##### Endpoint: 
-`{{server}}/{{reponame}}/contacts.php`
+**Endpoint:**
+**DELETE/** `{{server}}/{{reponame}}/contacts.php`
 
-##### Query Parameters: 
-- Authorization Bearer Token - `Token: <token>`
-- Body JSON
+**Headers:**
+
 ```json
 {
-    "phone_number": 1234567890
+  "Authorization Bearer Token": "Token: <token>"
 }
 ```
-##### Example:
 
-**DELETE** http://serverip/messagingapp-api/contacts.php
+**Body:**
 
-**response**
+```json
+{
+    "username": "john_doe"
+}
+```
+
+**Response:**
 
 ```json
 {
@@ -251,28 +264,29 @@ psql -U postgres demo < messaging_app_schema.pgsql
 }
 
 ```
-#### Profile 
-> Update Profile
+#### Update Profile 
 
-##### Endpoint: 
-`{{server}}/{{reponame}}/profile.php`
+**Endpoint:**
+**PUT/** `{{server}}/{{reponame}}/profile.php`
 
-##### Query Parameters: 
-- Authorization Bearer Token - `Token: <token>`
-- Body JSON
+**Headers:**
+
+```json
+{
+  "Authorization Bearer Token": "Token: <token>"
+}
+```
+
+**Body:**
+
 ```json
 {
     "first_name": "John",
-    "last_name": "Doe",
-    "old_password": "Helloworld!",
-    "new_password": "Helloworld!%"
+    "last_name": "Doe"
 }
 ```
-##### Example:
 
-**PUT** http://serverip/messagingapp-api/profile.php
-
-**response**
+**Response:**
 
 ```json
 {
@@ -281,26 +295,25 @@ psql -U postgres demo < messaging_app_schema.pgsql
     "profile": {
         "first_name": "John",
         "last_name": "Doe",
-        "phone_number": "1234567890",
+        "username": "john_doe",
         "token": "Your token"
     }
 }
 ```
-#### Messages
-> Load Messages
+#### Load Messages
 
-##### Endpoint: 
-`{{server}}/{{reponame}}/messages.php`
+**Endpoint:**
+**GET/** `{{server}}/{{reponame}}/messages.php?username={ username }`
 
-##### Query Parameters: 
-- Authorization Bearer Token - `Token: <token>`
-- Query Params - `?phone_number=1234567890`
+**Headers:**
 
+```json
+{
+  "Authorization Bearer Token": "Token: <token>"
+}
+```
 
-##### Example:
-**GET** http://serverip/messagingapp-api/messages.php?phone_number=1234567890
-
-**response**
+**Response:**
 
 ```json
 {
@@ -327,26 +340,29 @@ psql -U postgres demo < messaging_app_schema.pgsql
     ]
 }
 ```
-#### Messages
-> Send Message
+#### Send Message
 
-##### Endpoint: 
-`{{server}}/{{reponame}}/messages.php`
+**Endpoint:**
+**POST/** `{{server}}/{{reponame}}/messages.php`
 
-##### Query Parameters: 
-- Authorization Bearer Token - `Token: <token>`
-- Body JSON
+**Headers:**
+
 ```json
 {
-    "phone_number": 1234567890,
+  "Authorization Bearer Token": "Token: <token>"
+}
+```
+
+**Body:**
+
+```json
+{
+    "username": "john_doe",
     "body_text": "Hello John, How your doing?"
 }
 ```
-##### Example:
 
-**POST** http://serverip/messagingapp-api/messages.php?phone_number=1234567890
-
-**response**
+**Response:**
 
 ```json
 {
@@ -354,25 +370,28 @@ psql -U postgres demo < messaging_app_schema.pgsql
     "message": "message sent"
 }
 ```
-#### Messages
-> Delete Messages
+#### Delete Message History
 
-##### Endpoint: 
-`{{server}}/{{reponame}}/messages.php`
+**Endpoint:**
+**DELETE/** `{{server}}/{{reponame}}/messages.php`
 
-##### Query Parameters: 
-- Authorization Bearer Token - `Token: <token>`
-- Body JSON
+**Headers:**
+
 ```json
 {
-    "phone_number": 1234567890
+  "Authorization Bearer Token": "Token: <token>"
 }
 ```
-##### Example:
 
-**DELETE** http://serverip/messagingapp-api/messages.php
+**Body:**
 
-**response**
+```json
+{
+    "username": "john_doe"
+}
+```
+
+**Response**
 
 ```json
 {
@@ -380,30 +399,26 @@ psql -U postgres demo < messaging_app_schema.pgsql
     "message": "All messages deleted"
 }
 ```
----
 
-## 👋 Meet the Authors
+## 🤝 Connect with LCube Studios
 
-### Luis Muñoz
+🌎 [Website](https://Lcubestudios.io)
 
-- [LinkedIn](https://www.linkedin.com/in/lmunoz0806/)
-- [Github](https://github.com/lmunoz0806)
+✉️ [Contact Us](mailto:Contact@lcubestudios.io)
 
-### Dennys Cedeño
+📅 [Let's Meet](https://calendly.com/lcubestudios/30min)
 
-- [LinkedIn](https://www.linkedin.com/in/dcedenor/)
-- [Github](https://github.com/dennys9415)
+## 🤘 Follow Us
+[LinkedIn](https://www.linkedin.com/company/lcubestudios/)
 
-## 📣 Connect with LCube Studios
-- 🌎 [Website](https://Lcubestudios.io)
-- ✉️ [Contact Us]("mailto:Contact@lcubestudios.io")
-- 📅 [Let's Meet](https://calendly.com/lcubestudios/30min)
-#### Follow Us
-- [LinkedIn](https://www.linkedin.com/company/lcubestudios/)
-- [Instagram](https://www.instagram.com/lcubestudios)
-- [Facebook](https://www.facebook.com/lcubestudiosnyc/)
-- [Twitter](https://www.twitter.com/lcubestudios/)
-- [Discord](https://discord.com/invite/6Ud9x23zaK)
-- [Github](https://github.com/lcubestudios)
+[Instagram](https://www.instagram.com/lcubestudios)
+
+[Facebook](https://www.facebook.com/lcubestudiosnyc/)
+
+[Twitter](https://www.twitter.com/lcubestudios/)
+
+[Discord](https://discord.com/invite/6Ud9x23zaK)
+
+[Github](https://github.com/lcubestudios)
 
 ## 💡 Let's make your FrameWork
