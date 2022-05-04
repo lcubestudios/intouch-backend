@@ -75,7 +75,7 @@ if ($method === "POST"){
 		if ($state == '23505') {
 			$output = array(
 				'status_code' => 301,
-				'message' => 'This phone number has already been registered.'
+				'message' => 'This username has already been registered.'
 			);
 		}
 		else {
