@@ -18,21 +18,18 @@ It is a white-label product that is flexible to color and logo customizations, o
 
 ## Installation Options
 
-### 🐳 Option 1 : Containerized Image
+### 🐳 Option 1 : Containerized Docker
 This option allows installation of frontend and backend environments as a containerized docker image with env configurations.
 
 Links:
-
-[Docker Repository](https://github.com/lcubestudios/messagingapp-docker)
+- [Docker Repository](https://github.com/lcubestudios/messagingapp-docker)
 
 ### ⚙️ Option 2 : Download from source code
 This option allows you to download and install frontend and backend code independently
 
 Links:
-
-[Frontend Repository](https://github.com/lcubestudios/messagingapp-frontend)
-
-️[Backend Repository](https://github.com/lcubestudios/messagingapp-api)
+- [Frontend Repository](https://github.com/lcubestudios/messagingapp-frontend)
+- ️[API Repository](https://github.com/lcubestudios/messagingapp-api)
 
 # API Documentation
 
