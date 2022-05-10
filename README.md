@@ -16,13 +16,23 @@ It is a white-label product that is flexible to color and logo customizations, o
 
 📒 [Documentation](/README.md)
 
-## Source Code
+## Installation Options
 
-⚙️ [Frontend Repository](https://github.com/lcubestudios/messagingapp-frontend)
+### 🐳 Option 1 : Containerized Image
+This option allows installation of frontend and backend environments as a containerized docker image with env configurations.
 
-🗄 ️[Backend Repository](https://github.com/lcubestudios/messagingapp-api)
+Links:
+[Docker Repository](https://github.com/lcubestudios/messagingapp-docker)
 
-🐳 [Docker Repository](https://github.com/lcubestudios/messagingapp-docker)
+### ⚙️ Option 2 : Download from source code
+This option allows you to download and install frontend and backend code independently
+
+Links:
+[Frontend Repository](https://github.com/lcubestudios/messagingapp-frontend)
+
+️[Backend Repository](https://github.com/lcubestudios/messagingapp-api)
+
+# API Documentation
 
 ## Technologies Used
 
@@ -30,15 +40,6 @@ It is a white-label product that is flexible to color and logo customizations, o
 - Programming language: [PHP 8.1](https://www.php.net/downloads.php)
 
 ## 🧰 Prerequisites
-
-#### Source Code
-Clone [repository](https://github.com/lcubestudios/messagingapp-api) (run the following command inside the terminal)
-
-  ```sh
-  git clone https://github.com/lcubestudios/messagingapp-api
-  cd messagingapp-api
-  ```
-  > Keep this terminal active, this is where you will be required to run the commands stated below
 
 #### Postman
 
@@ -53,8 +54,24 @@ Clone [repository](https://github.com/lcubestudios/messagingapp-api) (run the fo
 -   [Install PostreSQL on Ubuntu 20.04 LTS](https://www.digitalocean.com/community/tutorials/how-to-install-postgresql-on-ubuntu-20-04-quickstart)
 -   [Install PHP PGSQL Module on Ubuntu 20.04 LTS]()
 
+## Installation
 
-## OPTION 1 - Building from source
+Clone repository
+```sh
+git clone https://github.com/lcubestudios/messagingapp-api.git
+```
+
+Change to project directory
+```sh
+cd messagingapp-api
+```
+
+Checkout branch
+```sh
+git fetch && git checkout { branch name }
+```
+
+## Build
 > Make sure you have completed the tasks mentioned in the [Prerequisites](#-prerequisites) section above before proceeding
 
 #### Before you Start:
@@ -101,20 +118,10 @@ psql -U postgres demo < messaging_app_schema.pgsql
     DB_USER=“YOUR_DB_USERNAME”
     DB_PASSWORD=“YOUR_DB_PASSWORD”
     DB_PORT=YOUR_PORT
-    
-    ## Headers ##
-    # * is the default for all. Make sure you update the CORS for better API security
-    HEADER_ORIGIN="*" # ex. https://yourdomain.com
-    HEADER_METHODS='*' # ex. GET,POST,PUT,DELETE
-    HEADER_HEADERS='*' # ex. Content-Type
     ```
 #### Step 5: Test endpoints
 1. In **POSTMAN** Update `server` variable in the collection to your server address
 2. Test CRUD commands in **POSTMAN** collection: `GET`, `PUT`, `POST`, `DELETE`
-
-#### 🎉 DONE
-
----
 
 ## How to use the solution
 
