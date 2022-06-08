@@ -115,7 +115,7 @@ switch ($method):
          $output = array(
             'status_code' => '500', 
             'message'=> 'Error, Invalid message type'
-         )
+         );
       }
    echo json_encode($output);
    pg_close($conn);
