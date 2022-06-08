@@ -67,33 +67,58 @@ switch ($method):
       $raw=file_get_contents('php://input');
       $data=json_decode($raw,true);
       $username = $data['username'];
-      $body_text = $data['body_text'];
+      $message_type = $data['message_type'];
+      $valid_type = false;
 
-      //Load User id 
-      $query = "SELECT u_id FROM " . $users_table ." WHERE token = '".$token."'";
-      $result = pg_query($conn, $query);
-  
-      if($row = pg_fetch_row($result)) {
-          $u_id  = $row[0];
+      if ($message_type == 'text'){
+         $valid_type = true;
+         $body_text = $data['body_text'];
+      }
+      elseif( $message_type == 'image'){
+         $valid_type = true;
+         $file_name = $_FILES['file']['name'];
+         $file_extension = pathinfo($file_name, PATHINFO_EXTENSION);
+         $file_size = $_FILES['file']['size'];
+         $file_tmp= $_FILES['file']['tmp_name']; #tmp name
+         $data = file_get_contents($file_tmp);
+         $base64 = 'data:image/' . $file_extension . ';base64,' . base64_encode($data);
+         $body_text = $base64;
       }
 
-      //Load Reciever user id
-      $query2 = "SELECT u_id FROM " . $users_table ." WHERE username = '".$username."'";
-      $result2 = pg_query($conn, $query2);
-      if($r = pg_fetch_row($result2)) {
-          $r_uid = $r[0];
+      if ($valid_type) {
+         echo json_encode($output);
+        //Load User id 
+        $query = "SELECT u_id FROM " . $users_table ." WHERE token = '".$token."'";
+        $result = pg_query($conn, $query);
+     
+        if($row = pg_fetch_row($result)) {
+            $u_id  = $row[0];
+        }
+     
+        //Load Reciever user id
+        $query2 = "SELECT u_id FROM " . $users_table ." WHERE username = '".$username."'";
+        $result2 = pg_query($conn, $query2);
+        if($r = pg_fetch_row($result2)) {
+            $r_uid = $r[0];
+        }
+     
+        //Insert Message
+        $query3 = "INSERT INTO ".$messages_table." (sender_id, reciever_id, body_text, message_type) VALUES ('". $u_id. "', '". $r_uid. "', '".$body_text."', '".$message_type."')";
+        pg_query($conn, $query3);
+        //Output Contacts
+        $output = array(
+           'status_code' => 200,
+           'message' => "message sent"
+       );
       }
-
-      //Insert Message
-      $query3 = "INSERT INTO ".$messages_table." (sender_id, reciever_id, body_text) VALUES ('". $u_id. "', '". $r_uid. "', '".$body_text."')";
-      pg_query($conn, $query3);
-      //Output Contacts
-      $output = array(
-         'status_code' => 200,
-         'message' => "message sent"
-     );
+      else {
+         $output = array(
+            'status_code' => '500', 
+            'message'=> 'Error, Invalid message type'
+         )
+      }
    echo json_encode($output);
-	pg_close($conn);
+   pg_close($conn);
    break;
 
    case 'DELETE':
