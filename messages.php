@@ -76,13 +76,14 @@ switch ($method):
       }
       elseif( $message_type == 'image'){
          $valid_type = true;
-         $file_name = $_FILES['file']['name'];
-         $file_extension = pathinfo($file_name, PATHINFO_EXTENSION);
-         $file_size = $_FILES['file']['size'];
-         $file_tmp= $_FILES['file']['tmp_name']; #tmp name
-         $data = file_get_contents($file_tmp);
-         $base64 = 'data:image/' . $file_extension . ';base64,' . base64_encode($data);
-         $body_text = $base64;
+        //  $file_name = $_FILES['file']['name'];
+        //  $file_extension = pathinfo($file_name, PATHINFO_EXTENSION);
+        //  $file_size = $_FILES['file']['size'];
+        //  $file_tmp= $_FILES['file']['tmp_name']; #tmp name
+        //  $data = file_get_contents($file_tmp);
+        //  $base64 = 'data:image/' . $file_extension . ';base64,' . base64_encode($data);
+        //  $body_text = $base64;
+				$body_text = $data['body_text'];
       }
 
       if ($valid_type) {

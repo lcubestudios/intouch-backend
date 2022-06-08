@@ -12,8 +12,6 @@ It is a white-label product that is flexible to color and logo customizations, o
 
 🕹️ [Demo](https://demo.lcubestudios.io/messagingapp-frontend)
 
-📝 [Case Study](https://lcubestudios.io/work/messaging-app)
-
 📒 [Documentation](/README.md)
 
 ## Installation Options
