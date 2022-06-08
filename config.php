@@ -25,6 +25,22 @@ header("Access-Control-Allow-Origin: $origin");
 header("Access-Control-Allow-Methods: $methods"); 
 header("Access-Control-Allow-Headers: $headers"); 
 
+
+// DB Tables
+$users_table = 'public.messaging_app_user';
+$contacts_table = 'public.messaging_app_contacts';
+$messages_table = 'public.messaging_app_messages';
+
+//DB Columns 
+//Messaging_app_user table
+// $db_u_id = "u_id";
+// $db_username = "username";
+// $db_password = "password";
+// $db_token = "token";
+// $db_first_name = "first_name";
+// $db_last_name = "last_name";
+
+
 // Create connection
 $conn = pg_connect("host=$host port=$port dbname=$db user=$db_user password=$db_pass");
 

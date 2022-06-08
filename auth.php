@@ -2,7 +2,7 @@
 require('./config.php');
 
 $output = array();
-$table = 'public.messaging_app_user';
+// $users_table = 'public.messaging_app_user';
 
 if ($method === "POST"){
 	$purpose = $_GET['purpose'];
@@ -15,7 +15,7 @@ if ($method === "POST"){
 		$username = $data['username'];
 		$password = $data['password'];
 
-		$verify_pass_query = "SELECT password FROM " . $table . " WHERE username = '" . $username . "'";
+		$verify_pass_query = "SELECT password FROM " . $users_table . " WHERE username = '" . $username . "'";
 		$result = pg_query($conn, $verify_pass_query);
 		$hashed_pass = pg_fetch_row($result);
 		
@@ -23,7 +23,7 @@ if ($method === "POST"){
 			$password_verify = password_verify($password, $hashed_pass[0]);
 
 			if($password_verify == true){
-				$query = "SELECT token, first_name, last_name, username FROM " . $table . " WHERE username = '" . $username . "' ";
+				$query = "SELECT token, first_name, last_name, username FROM " . $users_table . " WHERE username = '" . $username . "' ";
 			
 				$result = pg_query($conn, $query);
 	
@@ -65,7 +65,7 @@ if ($method === "POST"){
 
 		$token = bin2hex(openssl_random_pseudo_bytes(20));
 
-		$query = "INSERT INTO " . $table . " (first_name, last_name, username, password, token)
+		$query = "INSERT INTO " . $users_table . " (first_name, last_name, username, password, token)
 			VALUES ('". $first_name ."', '". $last_name ."', '". $username ."', '". $hash ."', '". $token ."')";
 
 		pg_send_query($conn, $query);

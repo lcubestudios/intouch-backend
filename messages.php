@@ -5,9 +5,9 @@ ini_set('display_errors', 'On');
 
 require('./config.php');
 
-$users_table = 'public.messaging_app_user';
-$contacts_table = 'public.messaging_app_contacts';
-$messages_table = 'public.messaging_app_messages';
+// $users_table = 'public.messaging_app_user';
+// $contacts_table = 'public.messaging_app_contacts';
+// $messages_table = 'public.messaging_app_messages';
 
 switch ($method):
    case 'GET':

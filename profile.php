@@ -2,7 +2,7 @@
 require('./config.php');
 
 $output = array();
-$table = 'public.messaging_app_user';
+// $users_table = 'public.messaging_app_user';
 
 if ($method === "PUT") {
 	$headers = getallheaders();
@@ -14,7 +14,7 @@ if ($method === "PUT") {
 	$first_name = $data['first_name'];
 	$last_name = $data['last_name'];
 
-	$query = "UPDATE " . $table . " SET first_name = '" . $first_name . "', last_name = '" . $last_name . "' 
+	$query = "UPDATE " . $users_table . " SET first_name = '" . $first_name . "', last_name = '" . $last_name . "' 
 	WHERE token = '" . $token . "' RETURNING first_name, last_name, username, token";
 
 	$result = pg_query($conn, $query);
