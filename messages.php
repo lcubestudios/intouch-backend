@@ -47,6 +47,7 @@ switch ($method):
             "messages_read" => $row[3],
             "date_message" => $row[4],
             "message_id" => $row[5],
+            "message_type" => $row[6],
             "is_sender" => $row[0] === $u_id ? true:false
          ));
       }
