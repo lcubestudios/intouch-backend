@@ -86,7 +86,6 @@ switch ($method):
       }
 
       if ($valid_type) {
-         echo json_encode($output);
         //Load User id 
         $query = "SELECT u_id FROM " . $users_table ." WHERE token = '".$token."'";
         $result = pg_query($conn, $query);
