@@ -56,9 +56,11 @@ CREATE TABLE public.messaging_app_messages (
     body_text text,
     reciever_read boolean DEFAULT false,
     date timestamp with time zone DEFAULT CURRENT_TIMESTAMP,
-    message_id integer DEFAULT nextval('public.messaging_app_messages_id_seq'::regclass)
+    message_id integer DEFAULT nextval('public.messaging_app_messages_id_seq'::regclass),
+    message_type text,
+    raw_data text,
+    file_extension text
 );
-
 
 ALTER TABLE public.messaging_app_messages OWNER TO postgres;
 
