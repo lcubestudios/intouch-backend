@@ -33,12 +33,12 @@ $messages_table = $_ENV['MESSAGES_TABLE'];
 
 // DB Columns
 # Messaging_app_user table
-$db_u_id = $_ENV['DB_U_ID'];
-$db_username = $_ENV['DB_USERNAME'];
-$db_password = "password";
-$db_token = "token";
-$db_first_name = "first_name";
-$db_last_name = "last_name";
+// $db_u_id = $_ENV['DB_U_ID'];
+// $db_username = $_ENV['DB_USERNAME'];
+// $db_password = "password";
+// $db_token = "token";
+// $db_first_name = "first_name";
+// $db_last_name = "last_name";
 
 // Create connection
 $conn = pg_connect("host=$host port=$port dbname=$db user=$db_user password=$db_pass");

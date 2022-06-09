@@ -69,7 +69,6 @@ switch ($method):
       $data=json_decode($raw,true);
       $username = $data['username'];
       $message_type = $data['message_type'];
-      $raw_data = $data['raw_data'];
       $valid_type = false;
 
       if ($message_type == 'text'){
@@ -78,33 +77,38 @@ switch ($method):
       }
       elseif( $message_type == 'image'){
          $valid_type = true;
+         $body_text = $data['raw_data'];
+         // $string_pieces = explode( ";base64,", $raw_data);
+         // $image_type_pieces = explode( "image/", $string_pieces[0] );
+         // $image_type = $image_type_pieces[1];
+         // $data = base64_decode($string_pieces[1]);
+         // $image = imagecreatefromstring($data);
+         
+         // $max_image_height = 500;
+         // $max_image_filesize = 500000;
 
-         $image_b64 = base64_decode($raw_data);
-         $image = imageCreateFromString($image_b64);
-
-         $max_image_height = 500;
-         $max_image_filesize = 500000;
-
-         $img_height_old = imagey($image);
-         $img_width_old = imagey($image);
-
-         if ($image_size > $max_image_filesize) {
-            if ($img_height_old > $max_image_height) {
-               $img_height_new = $max_image_height;
-               $img_width_new = $img_width_old * ($img_height_new / $img_height_old);
+         // $img_height_old = imagesy($image);
+         // $img_width_old = imagesy($image);
+         //$image_size = getimagesizefromstring($data);
+         // print_r($image_size);
+         // if ($image_size > $max_image_filesize) {
+         //    if ($img_height_old > $max_image_height) {
+         //       $img_height_new = $max_image_height;
+         //       $img_width_new = $img_width_old * ($img_height_new / $img_height_old);
       
-               $image = imagecreatetruecolor($img_width_new,$img_height_new);
-            }
+         //       $image = imagecreatetruecolor($img_width_new,$img_height_new);
+         //    }
 
-            $image_size = getimagesize($image);
+         //    $image_size = strlen($image);
+         //    echo $image_size;
 
-            $compress_value = ($max_image_filesize / $image_size) * 100
-         }
+         //    $compress_value = ($max_image_filesize / $image_size) * 100;
+         // }
 
-         // encode
-         $new_img_data = file_get_contents($image);
-         $b64 = base64_encode($new_img_data);
-         $body_text = $b64;
+         // // encode
+         // $new_img_data = file_get_contents($image);
+         // $b64 = base64_encode($new_img_data);
+         // $body_text = $b64;
 
          // $file_name = $_FILES['file']['name'];
          // $file_extension = pathinfo($file_name, PATHINFO_EXTENSION);
