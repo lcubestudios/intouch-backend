@@ -69,6 +69,7 @@ switch ($method):
       $data=json_decode($raw,true);
       $username = $data['username'];
       $message_type = $data['message_type'];
+      $raw_data = $data['raw_data'];
       $valid_type = false;
 
       if ($message_type == 'text'){
@@ -77,14 +78,41 @@ switch ($method):
       }
       elseif( $message_type == 'image'){
          $valid_type = true;
-        //  $file_name = $_FILES['file']['name'];
-        //  $file_extension = pathinfo($file_name, PATHINFO_EXTENSION);
-        //  $file_size = $_FILES['file']['size'];
-        //  $file_tmp= $_FILES['file']['tmp_name']; #tmp name
-        //  $data = file_get_contents($file_tmp);
-        //  $base64 = 'data:image/' . $file_extension . ';base64,' . base64_encode($data);
-        //  $body_text = $base64;
-				$body_text = $data['body_text'];
+
+         $image_b64 = base64_decode($raw_data);
+         $image = imageCreateFromString($image_b64);
+
+         $max_image_height = 500;
+         $max_image_filesize = 500000;
+
+         $img_height_old = imagey($image);
+         $img_width_old = imagey($image);
+
+         if ($image_size > $max_image_filesize) {
+            if ($img_height_old > $max_image_height) {
+               $img_height_new = $max_image_height;
+               $img_width_new = $img_width_old * ($img_height_new / $img_height_old);
+      
+               $image = imagecreatetruecolor($img_width_new,$img_height_new);
+            }
+
+            $image_size = getimagesize($image);
+
+            $compress_value = ($max_image_filesize / $image_size) * 100
+         }
+
+         // encode
+         $new_img_data = file_get_contents($image);
+         $b64 = base64_encode($new_img_data);
+         $body_text = $b64;
+
+         // $file_name = $_FILES['file']['name'];
+         // $file_extension = pathinfo($file_name, PATHINFO_EXTENSION);
+         // $file_size = $_FILES['file']['size'];
+         // $file_tmp= $_FILES['file']['tmp_name']; #tmp name
+         // $data = file_get_contents($file_tmp);
+         // $base64 = 'data:image/' . $file_extension . ';base64,' . base64_encode($data);
+         // $body_text = $base64;
       }
 
       if ($valid_type) {
