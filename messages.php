@@ -76,34 +76,40 @@ switch ($method):
          $body_text = $data['body_text'];
       }
       elseif( $message_type == 'image'){
-         $valid_type = true;
-         $body_text = $data['raw_data'];
-         // $string_pieces = explode( ";base64,", $raw_data);
-         // $image_type_pieces = explode( "image/", $string_pieces[0] );
-         // $image_type = $image_type_pieces[1];
-         // $data = base64_decode($string_pieces[1]);
-         // $image = imagecreatefromstring($data);
+         elseif( $message_type == 'image'){
+            $valid_type = true;
+            $raw_data = $data['raw_data'];
+            $string_pieces = explode( ";base64,", $raw_data);
+            $image_type_pieces = explode( "image/", $string_pieces[0] );
+            $image_type = $image_type_pieces[1];
+            $data = base64_decode($string_pieces[1]);
+            $image = imagecreatefromstring($data);
+   
+            $max_image_height = 500;
+            $max_image_filesize = 500000;
+   
+            $img_height_old = imagesy($image);
+            $img_width_old = imagesy($image);
+   
+            #$image_size = (strlen($raw_data) * 3 / 4) - substr_count(substr($raw_data, -2), '=');
+            $image_size = strlen(base64_decode($raw_data));
+            
+            if ($image_size > $max_image_filesize) {
+               if ($img_height_old > $max_image_height) {
+                  $img_height_new = $max_image_height;
+                  $img_width_new = $img_width_old * ($img_height_new / $img_height_old);
          
-         // $max_image_height = 500;
-         // $max_image_filesize = 500000;
-
-         // $img_height_old = imagesy($image);
-         // $img_width_old = imagesy($image);
-         //$image_size = getimagesizefromstring($data);
-         // print_r($image_size);
-         // if ($image_size > $max_image_filesize) {
-         //    if ($img_height_old > $max_image_height) {
-         //       $img_height_new = $max_image_height;
-         //       $img_width_new = $img_width_old * ($img_height_new / $img_height_old);
-      
-         //       $image = imagecreatetruecolor($img_width_new,$img_height_new);
-         //    }
-
-         //    $image_size = strlen($image);
-         //    echo $image_size;
-
-         //    $compress_value = ($max_image_filesize / $image_size) * 100;
-         // }
+                  $resized = imagecreatetruecolor($img_width_new,$img_height_new);     
+                  $image = imagecreatefromjpeg("/tmp/helloworld.jpeg");
+                  imagecopyresampled($resized, $image, 0,0,0,0, $img_width_new,$img_height_new,$img_width_old, $img_height_old);
+                  $new_image = imagejpeg($resized, null, 100);
+               }
+   
+               // $image_size = strlen($image);
+               // echo $image_size;
+   
+            //    $compress_value = ($max_image_filesize / $image_size) * 100;
+            }
 
          // // encode
          // $new_img_data = file_get_contents($image);
