@@ -16,21 +16,21 @@ switch ($method):
 		$headers = getallheaders();
 		$token = preg_split('/\s/', $headers['Authorization'])[1];
 		
-    $query = "SELECT u_id FROM " . $users_table. " WHERE token = '". $token. "'";
+    $query = "SELECT {$db_id_key} AS u_id FROM " . $users_table. " WHERE {$db_token_key} = '". $token. "'";
     $result = pg_query($conn, $query);
 
     // Load User ID
     if($row = pg_fetch_assoc($result)){
         $u_id = $row['u_id'];
     
-        $query2 = "SELECT c_uid FROM " . $contacts_table. " WHERE u_id = '". $u_id. "'";
+        $query2 = "SELECT {$db_contact_id_key} AS c_uid FROM " . $contacts_table. " WHERE {$db_user_id_key} = '". $u_id. "'";
         $result2 = pg_query($conn, $query2);
         $contact_array = array();
 
         // Load Contacts information
         while ($r = pg_fetch_row($result2)) {
             $c_uid  = $r[0];
-            $query3 = "SELECT username, first_name, last_name FROM " . $users_table. " WHERE u_id = '". $c_uid. "'";
+            $query3 = "SELECT ${db_username_key} AS username, ${db_first_name_key} AS first_name, ${db_last_name_key} AS last_name FROM " . $users_table. " WHERE ${db_id_key} = '". $c_uid. "'";
             $result3 = pg_query($conn, $query3);
             while($r3 = pg_fetch_row($result3)) {
                 $query4 = "SELECT COUNT(*) FROM " . $messages_table ." WHERE (reciever_read = FALSE AND reciever_id = '". $u_id."' AND sender_id = '". $c_uid."');";
@@ -76,7 +76,7 @@ switch ($method):
 
         if($username){
              //Load User id 
-            $query = "SELECT u_id FROM " . $users_table ." WHERE token = '".$token."'";
+            $query = "SELECT {$db_id_key} AS u_id FROM " . $users_table ." WHERE {$db_token_key} = '".$token."'";
             $result = pg_query($conn, $query);
         
             if($row = pg_fetch_row($result)) {
@@ -85,7 +85,7 @@ switch ($method):
 
             //Load Reciever user id
             $r_uid = null;
-            $query2 = "SELECT u_id FROM " . $users_table ." WHERE username = '".$username."'";
+            $query2 = "SELECT {$db_id_key} AS u_id FROM " . $users_table ." WHERE {$db_username_key} = '".$username."'";
             $result2 = pg_query($conn, $query2);
             if($r = pg_fetch_row($result2)) {
                 $r_uid = $r[0];
@@ -93,7 +93,7 @@ switch ($method):
 
             if($r_uid){
                 //Check if Relationship exists
-                $query3 = "SELECT u_id, c_uid FROM " . $contacts_table ." WHERE u_id = '".$u_id."' AND c_uid = '".$r_uid."'" ;
+                $query3 = "SELECT {$db_user_id_key} AS u_id, {$db_contact_id_key} AS c_uid FROM " . $contacts_table ." WHERE {$db_user_id_key} = '".$u_id."' AND {$db_contact_id_key} = '".$r_uid."'" ;
                 $result3 = pg_query($conn, $query3);
                 if(pg_fetch_row($result3)){
                     $output = array(
@@ -103,8 +103,8 @@ switch ($method):
                 }
                 // Create Relationship
                 else{
-                    $query4 = "INSERT INTO " . $contacts_table . " (u_id, c_uid) VALUES ('". $u_id."', '".$r_uid."')";
-                    $query5 = "INSERT INTO " . $contacts_table . " (c_uid, u_id) VALUES ('". $u_id."', '".$r_uid."')";
+                    $query4 = "INSERT INTO " . $contacts_table . " ({$db_user_id_key}, {$db_contact_id_key}) VALUES ('". $u_id."', '".$r_uid."')";
+                    $query5 = "INSERT INTO " . $contacts_table . " ({$db_contact_id_key}, {$db_user_id_key}) VALUES ('". $u_id."', '".$r_uid."')";
                     pg_query($conn, $query4);
                     pg_query($conn, $query5);
                     $output = array(
@@ -138,21 +138,21 @@ switch ($method):
         $data=json_decode($raw,true);
         $username = $data['username'];
     
-        $query = "SELECT u_id FROM " . $users_table ." WHERE token = '".$token."';";
+        $query = "SELECT {$db_id_key} AS u_id FROM " . $users_table ." WHERE {$db_token_key} = '".$token."';";
         $result = pg_query($conn, $query);
     
         if($row = pg_fetch_row($result)) {
                 $u_id  = $row[0];
         }
         //getting the c_id from username
-        $query2 = "SELECT u_id FROM " . $users_table ." WHERE username = '".$username."';";
+        $query2 = "SELECT {$db_id_key} AS u_id FROM " . $users_table ." WHERE {$db_username_key} = '".$username."';";
         $result2 = pg_query($conn, $query2);
         while ($row = pg_fetch_row($result2)) {
             $c_uid  = $row[0];
         }
 
-        $delete_relationship= "DELETE FROM " . $contacts_table ." WHERE (u_id = '".$u_id."' AND c_uid = '".$c_uid."');";
-        $delete_relationship_reciever= "DELETE FROM " . $contacts_table ." WHERE (u_id = '".$c_uid."' AND c_uid = '".$u_id."');";
+        $delete_relationship= "DELETE FROM " . $contacts_table ." WHERE ({$db_user_id_key} = '".$u_id."' AND {$db_contact_id_key} = '".$c_uid."');";
+        $delete_relationship_reciever= "DELETE FROM " . $contacts_table ." WHERE ({$db_user_id_key} = '".$c_uid."' AND {$db_contact_id_key} = '".$u_id."');";
         $result = pg_query($conn, $delete_relationship);
         $result2 = pg_query($conn, $delete_relationship_reciever);
          

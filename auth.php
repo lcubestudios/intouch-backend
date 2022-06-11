@@ -15,7 +15,7 @@ if ($method === "POST"){
 		$username = $data['username'];
 		$password = $data['password'];
 
-		$verify_pass_query = "SELECT {$db_password_key} AS password FROM " . $users_table . " WHERE username = '" . $username . "'";
+		$verify_pass_query = "SELECT {$db_password_key} AS password FROM " . $users_table . " WHERE {$db_username_key} = '" . $username . "'";
 		$result = pg_query($conn, $verify_pass_query);
 		$hashed_pass = pg_fetch_row($result);
 		
@@ -23,7 +23,7 @@ if ($method === "POST"){
 			$password_verify = password_verify($password, $hashed_pass[0]);
 
 			if($password_verify == true){
-				$query = "SELECT {$db_token_key} AS token, {$db_first_name_key} AS first_name, {$db_last_name_key} AS last_name, {$db_username_key} AS username FROM " . $users_table . " WHERE username = '" . $username . "' ";
+				$query = "SELECT {$db_token_key} AS token, {$db_first_name_key} AS first_name, {$db_last_name_key} AS last_name, {$db_username_key} AS username FROM " . $users_table . " WHERE {$db_username_key} = '" . $username . "' ";
 			
 				$result = pg_query($conn, $query);
 	

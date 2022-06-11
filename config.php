@@ -32,13 +32,20 @@ $contacts_table = $_ENV['CONTACTS_TABLE'];
 $messages_table = $_ENV['MESSAGES_TABLE'];
 
 // DB Columns
-# Messaging_app_user table
+# User/Auth table
 $db_id_key = $_ENV['DB_ID_KEY'];
 $db_username_key = $_ENV['DB_USERNAME_KEY'];
 $db_password_key = $_ENV['DB_PASSWORD_KEY'];
 $db_token_key = $_ENV['DB_ACESSS_TOKEN_KEY'];
 $db_first_name_key = $_ENV["DB_USER_FIRST_NAME_KEY"];
-$db_last_name_key = $ENV["DB_USER_LAST_NAME_KEY"];
+$db_last_name_key = $_ENV["DB_USER_LAST_NAME_KEY"];
+
+# Contacts table
+$db_user_id_key = $_ENV['DB_USER_ID_KEY'];
+$db_contact_id_key = $_ENV['DB_CONTACT_ID_KEY'];
+
+# Messages table
+
 
 // Create connection
 $conn = pg_connect("host=$host port=$port dbname=$db user=$db_user password=$db_pass");
