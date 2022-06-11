@@ -45,7 +45,15 @@ $db_user_id_key = $_ENV['DB_USER_ID_KEY'];
 $db_contact_id_key = $_ENV['DB_CONTACT_ID_KEY'];
 
 # Messages table
-
+$db_sender_id_key = $_ENV['DB_SENDER_ID_KEY'];
+$db_reciever_id_key = $_ENV['DB_RECIEVER_ID_KEY'];
+$db_message_body_key = $_ENV['DB_MESSAGE_BODY_KEY'];
+$db_read_status_key = $_ENV['DB_READ_STATUS_KEY'];
+// $db_message_date_key = $_ENV['DB_MESSAGE_DATE_KEY'];
+// $db_message_id_key = $_ENV['DB_MESSAGE_ID_KEY'];
+$db_message_type_key = $_ENV['DB_MESSAGE_TYPE_KEY'];
+$db_file_data_key = $_ENV['DB_FILE_DATA_KEY'];
+$db_file_extension_key = $_ENV['DB_FILE_EXTENSION_KEY'];
 
 // Create connection
 $conn = pg_connect("host=$host port=$port dbname=$db user=$db_user password=$db_pass");

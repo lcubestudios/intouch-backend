@@ -2,7 +2,6 @@
 require('./config.php');
 
 $output = array();
-// $users_table = 'public.messaging_app_user';
 
 if ($method === "POST"){
 	$purpose = $_GET['purpose'];

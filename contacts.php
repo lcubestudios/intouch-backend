@@ -4,10 +4,6 @@ error_reporting(E_ALL);
 ini_set('display_errors', 'On');
 require('./config.php');
 
-// $users_table = 'public.messaging_app_user';
-// $contacts_table = 'public.messaging_app_contacts';
-// $messages_table = 'public.messaging_app_messages';
-
 switch ($method):
     case 'GET':
     $output =  array();
@@ -33,7 +29,7 @@ switch ($method):
             $query3 = "SELECT ${db_username_key} AS username, ${db_first_name_key} AS first_name, ${db_last_name_key} AS last_name FROM " . $users_table. " WHERE ${db_id_key} = '". $c_uid. "'";
             $result3 = pg_query($conn, $query3);
             while($r3 = pg_fetch_row($result3)) {
-                $query4 = "SELECT COUNT(*) FROM " . $messages_table ." WHERE (reciever_read = FALSE AND reciever_id = '". $u_id."' AND sender_id = '". $c_uid."');";
+                $query4 = "SELECT COUNT(*) FROM " . $messages_table ." WHERE ({$db_read_status_key} = FALSE AND {$db_reciever_id_key} = '". $u_id."' AND {$db_sender_id_key} = '". $c_uid."');";
                 $result4 = pg_query($conn, $query4);
                 $row4 = pg_fetch_row($result4);
                 array_push($contact_array, array(

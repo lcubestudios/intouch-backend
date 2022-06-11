@@ -2,7 +2,6 @@
 require('./config.php');
 
 $output = array();
-// $users_table = 'public.messaging_app_user';
 
 if ($method === "PUT") {
 	$headers = getallheaders();
@@ -18,14 +17,14 @@ if ($method === "PUT") {
 	$hash = password_hash($new_password, PASSWORD_DEFAULT);
 
 	if($old_password){
-		$verify_pass_query = "SELECT password FROM " . $users_table . " WHERE token = '" . $token . "' ";
+		$verify_pass_query = "SELECT {$db_password_key} AS password FROM " . $users_table . " WHERE ${$db_token_key} = '" . $token . "' ";
 		$result = pg_query($conn, $verify_pass_query);
 		$hashed_pass = pg_fetch_row($result);
 		$password_verify = password_verify($old_password, $hashed_pass[0]);
 		
 		if($password_verify){
-			$query = "UPDATE " . $users_table . " SET first_name = '" . $first_name . "', last_name = '" . $last_name . "', password = '" . $hash . "' 
-			WHERE token = '" . $token . "' RETURNING first_name, last_name, username, token";
+			$query = "UPDATE " . $users_table . " SET {$db_first_name_key} = '" . {$db_last_name_key} . "', last_name = '" . $last_name . "', password = '" . $hash . "' 
+			WHERE {$db_token_key} = '" . $token . "' RETURNING first_name, last_name, username, token";
 	
 			$result = pg_query($conn, $query);
 	
