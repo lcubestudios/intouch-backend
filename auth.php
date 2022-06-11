@@ -15,7 +15,7 @@ if ($method === "POST"){
 		$username = $data['username'];
 		$password = $data['password'];
 
-		$verify_pass_query = "SELECT password FROM " . $users_table . " WHERE username = '" . $username . "'";
+		$verify_pass_query = "SELECT {$db_password_key} AS password FROM " . $users_table . " WHERE username = '" . $username . "'";
 		$result = pg_query($conn, $verify_pass_query);
 		$hashed_pass = pg_fetch_row($result);
 		
@@ -23,7 +23,7 @@ if ($method === "POST"){
 			$password_verify = password_verify($password, $hashed_pass[0]);
 
 			if($password_verify == true){
-				$query = "SELECT token, first_name, last_name, username FROM " . $users_table . " WHERE username = '" . $username . "' ";
+				$query = "SELECT {$db_token_key} AS token, {$db_first_name_key} AS first_name, {$db_last_name_key} AS last_name, {$db_username_key} AS username FROM " . $users_table . " WHERE username = '" . $username . "' ";
 			
 				$result = pg_query($conn, $query);
 	
@@ -65,7 +65,7 @@ if ($method === "POST"){
 
 		$token = bin2hex(openssl_random_pseudo_bytes(20));
 
-		$query = "INSERT INTO " . $users_table . " (first_name, last_name, username, password, token)
+		$query = "INSERT INTO " . $users_table . " ({$db_first_name_key}, {$db_last_name_key}, {$db_username_key}, {$db_password_key}, {$db_token_key})
 			VALUES ('". $first_name ."', '". $last_name ."', '". $username ."', '". $hash ."', '". $token ."')";
 
 		pg_send_query($conn, $query);
