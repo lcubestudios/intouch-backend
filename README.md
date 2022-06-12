@@ -116,13 +116,13 @@ psql -U postgres demo < messaging_app_schema.pgsql
     DB_PASSWORD=“YOUR_DB_PASSWORD”
     DB_PORT=YOUR_PORT
 
-    ## DB Tables ##
+    # DB Tables - default tables names  ##
     USERS_TABLE='public.messaging_app_user'
     CONTACTS_TABLE='public.messaging_app_contacts'
     MESSAGES_TABLE='public.messaging_app_messages'
 
     ## DEFAULT DB Columns ##
-    ## Messaging_app_user table default values ##
+    ## Messaging_app_user table default colummns names ##
     DB_ID_KEY='u_id'
     DB_USERNAME_KEY='username'
     DB_PASSWORD_KEY='password'
@@ -130,17 +130,17 @@ psql -U postgres demo < messaging_app_schema.pgsql
     DB_USER_FIRST_NAME_KEY='first_name'
     DB_USER_LAST_NAME_KEY='last_name'
 
-    ## Messaging_app_contacts table default values ##
+    ## Messaging_app_contacts table default colummns names ##
     DB_USER_ID_KEY='u_id'
     DB_CONTACT_ID_KEY='c_uid'
 
-    ## Messaging_app_messages table default values ##
+    ## Messaging_app_messages table default colummns names ##
     DB_SENDER_ID_KEY='sender_id'
     DB_RECIEVER_ID_KEY='reciever_id'
     DB_MESSAGE_BODY_KEY='body_text'
     DB_READ_STATUS_KEY='reciever_read'
-    # DB_MESSAGE_DATE_KEY='date'
-    # DB_MESSAGE_ID_KEY='message_id'
+    DB_MESSAGE_DATE_KEY='date'
+    DB_MESSAGE_ID_KEY='message_id'
     DB_MESSAGE_TYPE_KEY='message_type'
     DB_FILE_DATA_KEY='raw_data'
     DB_FILE_EXTENSION_KEY='file_extension'
