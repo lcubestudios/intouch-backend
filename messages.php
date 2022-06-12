@@ -85,7 +85,7 @@ switch ($method):
             $body_text = $raw_data;
             $raw_data = $raw_data;
          }else{
-               // decode base64-encoded image data
+            // decode base64-encoded image data
             $decoded_file_data = base64_decode($string_pieces[1]);
             // Path
             $file = "/tmp/image-". uniqid() .".{$file_extension}";
@@ -114,8 +114,6 @@ switch ($method):
                   // create the file
                   if(exif_imagetype($raw_data) == IMAGETYPE_JPEG){
                      imagejpeg($resized, $file);
-                  }elseif(exif_imagetype($raw_data) == IMAGETYPE_GIF){
-                     imagegif($resized, $file);
                   }elseif(exif_imagetype($raw_data)  == IMAGETYPE_PNG ){
                      imagepng($resized, $file);
                   }       
@@ -123,12 +121,15 @@ switch ($method):
                $image_size = filesize($file);
                $open_file = fopen($file, "r") or die("Unable to open file!");
                $read_file = fread($open_file, filesize($file));
-               #$raw_data = base64_encode($read_file);
+               $raw_data = base64_encode($read_file);
                // close file
                fclose($open_file);
+               $base64 = 'data:image/' . $file_extension . ';base64,' . base64_encode($read_file);
+               $body_text = $base64;
+            } else{
+               $body_text = $raw_data;
             }
-            $base64 = 'data:image/' . $file_extension . ';base64,' . base64_encode($read_file);
-            $body_text = $base64;
+            
          }
       }
 
