@@ -46,7 +46,7 @@ $db_contact_id_key = $_ENV['DB_CONTACT_ID_KEY'];
 
 # Messages table
 $db_sender_id_key = $_ENV['DB_SENDER_ID_KEY'];
-$db_reciever_id_key = $_ENV['DB_RECIEVER_ID_KEY'];
+$db_receiver_id_key = $_ENV['DB_RECEIVER_ID_KEY'];
 $db_message_body_key = $_ENV['DB_MESSAGE_BODY_KEY'];
 $db_read_status_key = $_ENV['DB_READ_STATUS_KEY'];
 // $db_message_date_key = $_ENV['DB_MESSAGE_DATE_KEY'];

@@ -20,18 +20,18 @@ switch ($method):
       while ($row = pg_fetch_row($result)) {
          $u_id = $row[0];
       }
-      // load Reciever user id
-      $load_reciever_id = "SELECT {$db_id_key} AS u_id FROM " . $users_table ." WHERE {$db_username_key} = '".$username."'";
-      $result2 = pg_query($conn, $load_reciever_id);
+      // load receiver user id
+      $load_receiver_id = "SELECT {$db_id_key} AS u_id FROM " . $users_table ." WHERE {$db_username_key} = '".$username."'";
+      $result2 = pg_query($conn, $load_receiver_id);
       if($r = pg_fetch_row($result2)) {
          $r_uid = $r[0];
       }
       // update READ field
-      $update_read_field = "UPDATE " . $messages_table ." SET {$db_read_status_key} = TRUE WHERE ({$db_sender_id_key} = '".$r_uid."' AND {$db_reciever_id_key} = '".$u_id."');";
+      $update_read_field = "UPDATE " . $messages_table ." SET {$db_read_status_key} = TRUE WHERE ({$db_sender_id_key} = '".$r_uid."' AND {$db_receiver_id_key} = '".$u_id."');";
       pg_query($conn, $update_read_field);
 
       // get all messages
-      $load_messages = "SELECT * FROM " . $messages_table ." WHERE ({$db_sender_id_key} = '".$u_id."' AND {$db_reciever_id_key} = '".$r_uid."') OR ({$db_reciever_id_key} = '".$u_id."' AND {$db_sender_id_key} = '".$r_uid."') ORDER BY date ASC;";
+      $load_messages = "SELECT * FROM " . $messages_table ." WHERE ({$db_sender_id_key} = '".$u_id."' AND {$db_receiver_id_key} = '".$r_uid."') OR ({$db_receiver_id_key} = '".$u_id."' AND {$db_sender_id_key} = '".$r_uid."') ORDER BY date ASC;";
       $results = pg_query($conn, $load_messages);
       $messages_array = array();
 
@@ -143,7 +143,7 @@ switch ($method):
             $u_id  = $row[0];
         }
      
-        //Load Reciever user id
+        //Load receiver user id
         $query2 = "SELECT {$db_id_key} AS u_id FROM " . $users_table ." WHERE {$db_username_key} = '".$username."'";
         $result2 = pg_query($conn, $query2);
         if($r = pg_fetch_row($result2)) {
@@ -151,7 +151,7 @@ switch ($method):
         }
      
         //Insert Message
-        $query3 = "INSERT INTO ".$messages_table." ({$db_sender_id_key}, {$db_reciever_id_key}, {$db_message_body_key}, {$db_message_type_key}, {$db_file_data_key}) VALUES ('". $u_id. "', '". $r_uid. "', '".$body_text."', '".$message_type."', '".$raw_data."')";
+        $query3 = "INSERT INTO ".$messages_table." ({$db_sender_id_key}, {$db_receiver_id_key}, {$db_message_body_key}, {$db_message_type_key}, {$db_file_data_key}) VALUES ('". $u_id. "', '". $r_uid. "', '".$body_text."', '".$message_type."', '".$raw_data."')";
         pg_query($conn, $query3);
         //Output Contacts
         $output = array(
@@ -185,7 +185,7 @@ switch ($method):
           $u_id  = $row[0];
       }
 
-      //Load Reciever user id
+      //Load receiver user id
       $query2 = "SELECT {$db_id_key} AS u_id FROM " . $users_table ." WHERE {$db_username_key} = '".$username."'";
       $result2 = pg_query($conn, $query2);
       if($r = pg_fetch_row($result2)) {
@@ -193,11 +193,11 @@ switch ($method):
       }
 
       //Delete Message
-      $count_messages_query = "SELECT  COUNT(*) FROM " . $messages_table ." WHERE ({$db_sender_id_key} = '".$u_id."' AND {$db_reciever_id_key} = '".$c_id."') OR ({$db_reciever_id_key} = '".$u_id."' AND {$db_sender_id_key} = '".$c_id."');";
+      $count_messages_query = "SELECT  COUNT(*) FROM " . $messages_table ." WHERE ({$db_sender_id_key} = '".$u_id."' AND {$db_receiver_id_key} = '".$c_id."') OR ({$db_receiver_id_key} = '".$u_id."' AND {$db_sender_id_key} = '".$c_id."');";
       $count_messages = pg_query($conn, $count_messages_query);
       $row = pg_fetch_row($count_messages);
       if($row[0] > 0){
-         $delete_messages_query = "DELETE FROM " . $messages_table ." WHERE ({$db_sender_id_key} = '".$u_id."' AND {$db_reciever_id_key} = '".$c_id."') OR ({$db_reciever_id_key} = '".$u_id."' AND {$db_sender_id_key} = '".$c_id."');";
+         $delete_messages_query = "DELETE FROM " . $messages_table ." WHERE ({$db_sender_id_key} = '".$u_id."' AND {$db_receiver_id_key} = '".$c_id."') OR ({$db_receiver_id_key} = '".$u_id."' AND {$db_sender_id_key} = '".$c_id."');";
          pg_query($conn, $delete_messages_query);
          $output = array(
             'status_code' => 200,

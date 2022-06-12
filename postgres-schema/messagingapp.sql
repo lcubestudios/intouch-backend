@@ -52,9 +52,9 @@ ALTER TABLE public.messaging_app_messages_id_seq OWNER TO postgres;
 
 CREATE TABLE public.messaging_app_messages (
     sender_id integer,
-    reciever_id integer,
+    receiver_id integer,
     body_text text,
-    reciever_read boolean DEFAULT false,
+    receiver_read boolean DEFAULT false,
     date timestamp with time zone DEFAULT CURRENT_TIMESTAMP,
     message_id integer DEFAULT nextval('public.messaging_app_messages_id_seq'::regclass),
     message_type text,

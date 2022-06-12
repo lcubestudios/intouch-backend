@@ -29,7 +29,7 @@ switch ($method):
             $query3 = "SELECT ${db_username_key} AS username, ${db_first_name_key} AS first_name, ${db_last_name_key} AS last_name FROM " . $users_table. " WHERE ${db_id_key} = '". $c_uid. "'";
             $result3 = pg_query($conn, $query3);
             while($r3 = pg_fetch_row($result3)) {
-                $query4 = "SELECT COUNT(*) FROM " . $messages_table ." WHERE ({$db_read_status_key} = FALSE AND {$db_reciever_id_key} = '". $u_id."' AND {$db_sender_id_key} = '". $c_uid."');";
+                $query4 = "SELECT COUNT(*) FROM " . $messages_table ." WHERE ({$db_read_status_key} = FALSE AND {$db_receiver_id_key} = '". $u_id."' AND {$db_sender_id_key} = '". $c_uid."');";
                 $result4 = pg_query($conn, $query4);
                 $row4 = pg_fetch_row($result4);
                 array_push($contact_array, array(
@@ -79,7 +79,7 @@ switch ($method):
                 $u_id  = $row[0];
             }
 
-            //Load Reciever user id
+            //Load receiver user id
             $r_uid = null;
             $query2 = "SELECT {$db_id_key} AS u_id FROM " . $users_table ." WHERE {$db_username_key} = '".$username."'";
             $result2 = pg_query($conn, $query2);
@@ -148,9 +148,9 @@ switch ($method):
         }
 
         $delete_relationship= "DELETE FROM " . $contacts_table ." WHERE ({$db_user_id_key} = '".$u_id."' AND {$db_contact_id_key} = '".$c_uid."');";
-        $delete_relationship_reciever= "DELETE FROM " . $contacts_table ." WHERE ({$db_user_id_key} = '".$c_uid."' AND {$db_contact_id_key} = '".$u_id."');";
+        $delete_relationship_receiver= "DELETE FROM " . $contacts_table ." WHERE ({$db_user_id_key} = '".$c_uid."' AND {$db_contact_id_key} = '".$u_id."');";
         $result = pg_query($conn, $delete_relationship);
-        $result2 = pg_query($conn, $delete_relationship_reciever);
+        $result2 = pg_query($conn, $delete_relationship_receiver);
          
         //Output Contacts
         $output = array(
