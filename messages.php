@@ -5,14 +5,10 @@ ini_set('display_errors', 'On');
 
 require('./config.php');
 
-// $users_table = 'public.messaging_app_user';
-// $contacts_table = 'public.messaging_app_contacts';
-// $messages_table = 'public.messaging_app_messages';
-
 switch ($method):
    case 'GET':
 
-      //Load Contact information
+      // load Contact information
       $headers = getallheaders();
       $token = preg_split('/\s/', $headers['Authorization'])[1];
 
@@ -24,17 +20,17 @@ switch ($method):
       while ($row = pg_fetch_row($result)) {
          $u_id = $row[0];
       }
-      //Load Reciever user id
+      // load Reciever user id
       $load_reciever_id = "SELECT {$db_id_key} AS u_id FROM " . $users_table ." WHERE {$db_username_key} = '".$username."'";
       $result2 = pg_query($conn, $load_reciever_id);
       if($r = pg_fetch_row($result2)) {
          $r_uid = $r[0];
       }
-      //Update READ field
+      // update READ field
       $update_read_field = "UPDATE " . $messages_table ." SET {$db_read_status_key} = TRUE WHERE ({$db_sender_id_key} = '".$r_uid."' AND {$db_reciever_id_key} = '".$u_id."');";
       pg_query($conn, $update_read_field);
 
-      //get all messages
+      // get all messages
       $load_messages = "SELECT * FROM " . $messages_table ." WHERE ({$db_sender_id_key} = '".$u_id."' AND {$db_reciever_id_key} = '".$r_uid."') OR ({$db_reciever_id_key} = '".$u_id."' AND {$db_sender_id_key} = '".$r_uid."') ORDER BY date ASC;";
       $results = pg_query($conn, $load_messages);
       $messages_array = array();
@@ -76,52 +72,64 @@ switch ($method):
          $body_text = $data['body_text'];
       }
       elseif( $message_type == 'image'){
-            $valid_type = true;
-            $raw_data = $data['raw_data'];
-            $string_pieces = explode( ";base64,", $raw_data);
-            $image_type_pieces = explode( "image/", $string_pieces[0] );
-            $image_type = $image_type_pieces[1];
-            $data = base64_decode($string_pieces[1]);
-            $image = imagecreatefromstring($data);
-   
+         $valid_type = true;
+         // load raw data
+         $raw_data = $data['raw_data'];
+         // extract image data from base64 data string
+         $string_pieces = explode( ";base64,", $raw_data);
+         $image_type_pieces = explode( "image/", $string_pieces[0] );
+         // image file extension
+         $file_extension = $image_type_pieces[1];
+            
+         if(exif_imagetype($raw_data) == IMAGETYPE_GIF ){
+            $body_text = $raw_data;
+            $raw_data = $raw_data;
+         }else{
+               // decode base64-encoded image data
+            $decoded_file_data = base64_decode($string_pieces[1]);
+            // Path
+            $file = "/tmp/image-". uniqid() .".{$file_extension}";
+            // save image data as file
+            // file_put_contents($file, $decoded_file_data);
+            // Create file in memory
+            $file_in_memory = imagecreatefromstring($decoded_file_data);
+            // load file size
+            $file_size = strlen(base64_decode($raw_data));
+
             $max_image_height = 500;
             $max_image_filesize = 500000;
-   
-            $img_height_old = imagesy($image);
-            $img_width_old = imagesy($image);
-   
-            #$image_size = (strlen($raw_data) * 3 / 4) - substr_count(substr($raw_data, -2), '=');
-            $image_size = strlen(base64_decode($raw_data));
+            // load image height
+            $img_height_old = imagesy($file_in_memory);
+            // load image width
+            $img_width_old = imagesx($file_in_memory);
             
-            if ($image_size > $max_image_filesize) {
+            if ($file_size > $max_image_filesize) {
                if ($img_height_old > $max_image_height) {
                   $img_height_new = $max_image_height;
-                  $img_width_new = $img_width_old * ($img_height_new / $img_height_old);
-         
-                  $resized = imagecreatetruecolor($img_width_new,$img_height_new);     
-                  $image = imagecreatefromjpeg("/tmp/helloworld.jpeg");
-                  imagecopyresampled($resized, $image, 0,0,0,0, $img_width_new,$img_height_new,$img_width_old, $img_height_old);
-                  $new_image = imagejpeg($resized, null, 100);
+                  $img_width_new = round($img_width_old * ($img_height_new / $img_height_old));
+                  // create canva 
+                  $resized = imagecreatetruecolor($img_width_new,$img_height_new);  
+                  // copy file data into the new canva size
+                  imagecopyresampled($resized, $file_in_memory, 0,0,0,0, $img_width_new,$img_height_new,$img_width_old, $img_height_old);
+                  // create the file
+                  if(exif_imagetype($raw_data) == IMAGETYPE_JPEG){
+                     imagejpeg($resized, $file);
+                  }elseif(exif_imagetype($raw_data) == IMAGETYPE_GIF){
+                     imagegif($resized, $file);
+                  }elseif(exif_imagetype($raw_data)  == IMAGETYPE_PNG ){
+                     imagepng($resized, $file);
+                  }       
                }
-   
-               // $image_size = strlen($image);
-               // echo $image_size;
-   
-            //    $compress_value = ($max_image_filesize / $image_size) * 100;
+               $image_size = filesize($file);
+               $open_file = fopen($file, "r") or die("Unable to open file!");
+               $read_file = fread($open_file, filesize($file));
+               #$raw_data = base64_encode($read_file);
+               // close file
+               fclose($open_file);
             }
-
-         // // encode
-         // $new_img_data = file_get_contents($image);
-         // $b64 = base64_encode($new_img_data);
-         // $body_text = $b64;
-
-         // $file_name = $_FILES['file']['name'];
-         // $file_extension = pathinfo($file_name, PATHINFO_EXTENSION);
-         // $file_size = $_FILES['file']['size'];
-         // $file_tmp= $_FILES['file']['tmp_name']; #tmp name
-         // $data = file_get_contents($file_tmp);
-         // $base64 = 'data:image/' . $file_extension . ';base64,' . base64_encode($data);
-         // $body_text = $base64;
+            $base64 = 'data:image/' . $file_extension . ';base64,' . base64_encode($read_file);
+            $body_text = $base64;
+         }
       }
 
       if ($valid_type) {
@@ -141,7 +149,7 @@ switch ($method):
         }
      
         //Insert Message
-        $query3 = "INSERT INTO ".$messages_table." ({$db_sender_id_key}, {$db_reciever_id_key}, {$db_message_body_key}, {$db_message_type_key}) VALUES ('". $u_id. "', '". $r_uid. "', '".$body_text."', '".$message_type."')";
+        $query3 = "INSERT INTO ".$messages_table." ({$db_sender_id_key}, {$db_reciever_id_key}, {$db_message_body_key}, {$db_message_type_key}, {$db_file_data_key}) VALUES ('". $u_id. "', '". $r_uid. "', '".$body_text."', '".$message_type."', '".$raw_data."')";
         pg_query($conn, $query3);
         //Output Contacts
         $output = array(
