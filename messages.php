@@ -70,6 +70,7 @@ switch ($method):
       if ($message_type == 'text'){
          $valid_type = true;
          $body_text = $data['body_text'];
+         $raw_data = $data['raw_data'];
       }
       elseif( $message_type == 'image'){
          $valid_type = true;
